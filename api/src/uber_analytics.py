@@ -46,7 +46,7 @@ def get_job(job_id):
     print("[INFO] Get job {}".format(job_id))
     mongo = Mongodb()
     job = mongo.get_item(job_id)
-    print(job)
+    job["_id"] = str(job["_id"])
     if None == job:
         return Response(
             response="",
