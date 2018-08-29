@@ -42,8 +42,9 @@ def print_estimation(estimation):
         prices = estimation["modes"][mode]["prices"]
         top = estimation["modes"][mode]["top"]
         fluctuation = estimation["modes"][mode]["fluctuations"]
-        print('{}\t {}-{}€ \t Trend: {} \t Global: {} \t Min: {}€ \t Max: {}€'.format(
+        print('{}\t {}€ \t Range: {}-{}€ \t Trend: {} \t Global: {} \t Min: {}€ \t Max: {}€'.format(
             mode,
+            prices["estimation"],
             prices["low"],
             prices["high"],
             colored_fluctuation(fluctuation["dynamic"]),
@@ -66,7 +67,4 @@ if __name__ == '__main__':
         print_estimation(estimations[-1])
         estimation_dict = csv_writer.convert_to_csv(estimations)
         csv_writer.write_csv(estimation_dict)
-        wait(100)
-
-
-
+        wait(60)

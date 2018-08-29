@@ -29,7 +29,8 @@ class Uber():
             estimations["modes"][mode["localized_display_name"]] = {
                 "prices": {
                     "low": int(mode["low_estimate"]),
-                    "high": int(mode["high_estimate"])
+                    "high": int(mode["high_estimate"]),
+                    "estimation": (int(mode["low_estimate"]) + int(mode["high_estimate"])) / 2.0
                 },
                 "ride_information": {
                     "distance": mode["distance"],

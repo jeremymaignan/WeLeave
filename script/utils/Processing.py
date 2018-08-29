@@ -4,17 +4,17 @@ class Processing():
         if 1 == len(estimations):
             for mode in estimations[0]["modes"]:
                 estimations[0]["modes"][mode]["top"] = {
-                    "min": estimations[0]["modes"][mode]["prices"]["low"],
-                    "max": estimations[0]["modes"][mode]["prices"]["low"]
+                    "min": estimations[0]["modes"][mode]["prices"]["estimation"],
+                    "max": estimations[0]["modes"][mode]["prices"]["estimation"]
                 }
         else:
             for mode in estimations[-1]["modes"]:
-                if estimations[-1]["modes"][mode]["prices"]["low"] < estimations[-2]["modes"][mode]["top"]["min"]:
-                    estimations[-1]["modes"][mode]["top"]["min"] = estimations[-1]["modes"][mode]["prices"]["low"]
+                if estimations[-1]["modes"][mode]["prices"]["estimation"] < estimations[-2]["modes"][mode]["top"]["min"]:
+                    estimations[-1]["modes"][mode]["top"]["min"] = estimations[-1]["modes"][mode]["prices"]["estimation"]
                 else:
                     estimations[-1]["modes"][mode]["top"]["min"] = estimations[-2]["modes"][mode]["top"]["min"]
-                if estimations[-1]["modes"][mode]["prices"]["low"] > estimations[-2]["modes"][mode]["top"]["max"]:
-                    estimations[-1]["modes"][mode]["top"]["max"] = estimations[-1]["modes"][mode]["prices"]["low"]
+                if estimations[-1]["modes"][mode]["prices"]["estimation"] > estimations[-2]["modes"][mode]["top"]["max"]:
+                    estimations[-1]["modes"][mode]["top"]["max"] = estimations[-1]["modes"][mode]["prices"]["estimation"]
                 else:
                     estimations[-1]["modes"][mode]["top"]["max"] = estimations[-2]["modes"][mode]["top"]["max"]
         return estimations
@@ -22,17 +22,15 @@ class Processing():
     def calc_dynamic_trends(self, estimations):
         if 1 != len(estimations):
             for mode in estimations[-1]["modes"]:
-                if estimations[-1]["modes"][mode]["prices"]["low"] < estimations[-2]["modes"][mode]["prices"]["low"]:
-                    print("- {}".format(mode))
+                if estimations[-1]["modes"][mode]["prices"]["estimation"] < estimations[-2]["modes"][mode]["prices"]["estimation"]:
                     estimations[-1]["modes"][mode]["fluctuations"]["dynamic"] = {
                         "trends": "-",
-                        "value": estimations[-2]["modes"][mode]["prices"]["low"] - estimations[-1]["modes"][mode]["prices"]["low"]
+                        "value": estimations[-2]["modes"][mode]["prices"]["estimation"] - estimations[-1]["modes"][mode]["prices"]["estimation"]
                     }
-                elif estimations[-1]["modes"][mode]["prices"]["low"] > estimations[-2]["modes"][mode]["prices"]["low"]:
-                    print("+ {}".format(mode))
+                elif estimations[-1]["modes"][mode]["prices"]["estimation"] > estimations[-2]["modes"][mode]["prices"]["estimation"]:
                     estimations[-1]["modes"][mode]["fluctuations"]["dynamic"] = {
                         "trends": "+",
-                        "value": estimations[-1]["modes"][mode]["prices"]["low"] - estimations[-2]["modes"][mode]["prices"]["low"]
+                        "value": estimations[-1]["modes"][mode]["prices"]["estimation"] - estimations[-2]["modes"][mode]["prices"]["estimation"]
                     }
                 else:
                     estimations[-1]["modes"][mode]["fluctuations"]["dynamic"] = {
@@ -44,15 +42,15 @@ class Processing():
     def calc_global_trends(self, estimations):
         if 1 != len(estimations):
             for mode in estimations[-1]["modes"]:
-                if estimations[-1]["modes"][mode]["prices"]["low"] < estimations[0]["modes"][mode]["prices"]["low"]:
+                if estimations[-1]["modes"][mode]["prices"]["estimation"] < estimations[0]["modes"][mode]["prices"]["estimation"]:
                     estimations[-1]["modes"][mode]["fluctuations"]["global"] = {
                         "trends": "-",
-                        "value": estimations[0]["modes"][mode]["prices"]["low"] - estimations[-1]["modes"][mode]["prices"]["low"]
+                        "value": estimations[0]["modes"][mode]["prices"]["estimation"] - estimations[-1]["modes"][mode]["prices"]["estimation"]
                     }
-                elif estimations[-1]["modes"][mode]["prices"]["low"] > estimations[0]["modes"][mode]["prices"]["low"]:
+                elif estimations[-1]["modes"][mode]["prices"]["estimation"] > estimations[0]["modes"][mode]["prices"]["estimation"]:
                     estimations[-1]["modes"][mode]["fluctuations"]["global"] = {
                         "trends": "+",
-                        "value": estimations[-1]["modes"][mode]["prices"]["low"] - estimations[0]["modes"][mode]["prices"]["low"]
+                        "value": estimations[-1]["modes"][mode]["prices"]["estimation"] - estimations[0]["modes"][mode]["prices"]["estimation"]
                     }
                 else:
                     estimations[-1]["modes"][mode]["fluctuations"]["global"] = {
