@@ -1,1 +1,1 @@
-# Uber Fare Trend Analytic
+# Uber Fare Trend Analytics
