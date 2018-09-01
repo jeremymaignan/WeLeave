@@ -1,9 +1,14 @@
+from utils.ConfManager import get_conf
+
 from pymongo import MongoClient
 from bson import ObjectId
 
 class Mongodb():
     def __init__(self):
-        client = MongoClient('mongodb', 27017)
+        client = MongoClient(
+            get_conf("mongodb_host"),
+            get_conf("mongodb_port")
+        )
         db = client['uber']
         self.collection = db['job']
     

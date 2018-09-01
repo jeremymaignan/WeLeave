@@ -2,7 +2,6 @@ from utils.ConfManager import get_conf
 
 from uber_rides.session import Session
 from uber_rides.client import UberRidesClient
-from termcolor import colored
 from time import sleep, strftime
 
 class Uber():
@@ -36,8 +35,3 @@ class Uber():
                 }
             }
         return estimations
-
-
-# if "surge_multiplier" in mode.keys():
-#         print(colored(mode["surge_multiplier"], 'red'))
-            

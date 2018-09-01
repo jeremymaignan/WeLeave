@@ -10,6 +10,9 @@ def algo():
     mongo = Mongodb()
     uber = Uber()
     jobs = mongo.get_pending_jobs()
+    if 0 == jobs.count():
+        print("[INFO] No pending jobs")
+        return
     for job in jobs:
         print("[INFO] {} iter: {}".format(job["_id"], get_conf("number_of_iteration") - job["iteration"] + 1))
         res = uber.get_estimation(job["from"]["coordinates"], job["to"]["coordinates"], job["seat_count"])

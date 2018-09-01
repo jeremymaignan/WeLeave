@@ -1,0 +1,1 @@
+*/2 * * * * cd /var/app/api/src/ && /usr/local/bin/python3.7 engine.py >> /var/app/log.txt 2>&1
