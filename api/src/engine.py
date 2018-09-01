@@ -5,18 +5,32 @@ from utils.ConfManager import get_conf
 from datetime import datetime
 from pprint import pprint
 
-def get_last_min_max(last, new):
-    if new["average"] < last["min"]:
-        print("[INFO] New min {}".format(new["average"]))
+def get_last_min_max(iteration, job, mode_name, new):
+    if 1 == iteration:
         min_ = new["average"]
-    else:
-        min_ = last["min"]
-    if new["average"] > last["max"]:
-        print("[INFO] New max {}".format(new["average"]))
         max_ = new["average"]
     else:
-        max_ = last["max"]
+        last = job["prices"]["uber"][mode_name][-1]
+        if new["average"] < last["min"]:
+            print("[INFO] {} new min {}".format(mode_name, new["average"]))
+            min_ = new["average"]
+        else:
+            min_ = last["min"]
+        if new["average"] > last["max"]:
+            print("[INFO] {} new max {}".format(mode_name, new["average"]))
+            max_ = new["average"]
+        else:
+            max_ = last["max"]
     return min_, max_
+
+def get_trends(iteration, job, mode_name, new):
+    if 1 == iteration:
+        dynamic = 0.0
+        global_ = 0.0
+    else:
+        dynamic = new["average"] - job["prices"]["uber"][mode_name][-1]["average"]
+        global_ = new["average"] - job["prices"]["uber"][mode_name][0]["average"]
+    return dynamic, global_
 
 def algo():
     print("[INFO] {}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
@@ -35,14 +49,9 @@ def algo():
                 "high": mode["prices"]["high"],
                 "average": mode["prices"]["estimation"]
             }
-            if 1 == iteration:
-                d["min"] = d["average"]
-                d["max"] = d["average"]
-            else:
-                min_, max_ = get_last_min_max(job["prices"]["uber"][mode_name][-1], d)
-                d["min"] = min_
-                d["max"] = max_
-            print(d)
+            d["min"], d["max"] = get_last_min_max(iteration, job, mode_name, d)
+            d["dynamic_trend"], d["global_trend"] = get_trends(iteration, job, mode_name, d)
+
             if "uber" not in job["prices"].keys():
                 job["prices"]["uber"] = {}
             if mode_name not in job["prices"]["uber"].keys():
