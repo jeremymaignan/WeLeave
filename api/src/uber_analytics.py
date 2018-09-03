@@ -46,7 +46,8 @@ def get_job(job_id):
     print("[INFO] Get job {}".format(job_id))
     mongo = Mongodb()
     job = mongo.get_item(job_id)
-    job["_id"] = str(job["_id"])
+    job["id"] = str(job["_id"])
+    del job["_id"]
     if None == job:
         return Response(
             response="",

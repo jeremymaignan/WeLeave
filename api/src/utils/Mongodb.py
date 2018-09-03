@@ -13,8 +13,11 @@ class Mongodb():
         self.collection = db['job']
     
     def get_item(self, id):
-        return self.collection.find_one({"_id" :ObjectId(id)})
-
+        try:
+            return self.collection.find_one({"_id" :ObjectId(id)})
+        except:
+            return None
+            
     def insert_item(self, item):
         return self.collection.insert_one(item).inserted_id
     
