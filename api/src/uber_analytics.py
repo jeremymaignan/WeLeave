@@ -24,7 +24,10 @@ def build_item(data):
             "address": data["to"],
             "coordinates": geo.get_geoloc(data["to"])
         },
-        "iteration": get_conf("number_of_iteration"),
+        "iteration": {
+            "todo": get_conf("number_of_iteration"),
+            "done": 0
+        },
         "status": "pending",
         "seat_count": data["number_seat"],
         "prices": {
@@ -64,7 +67,7 @@ def extend_job(job_id):
     except Exception as err:
         return Response(status=404)
     mongo = Mongodb()
-    result = mongo.update_job(job_id, {"$inc": {'iteration': iteration}})
+    result = mongo.update_job(job_id, {"$inc": {'iteration': {"todo": iteration}}})
     if not result:
         return Response(status=404)
     return Response(status=200)

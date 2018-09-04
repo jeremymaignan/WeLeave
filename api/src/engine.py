@@ -6,7 +6,7 @@ from datetime import datetime
 from pprint import pprint
 
 def get_last_min_max(iteration, job, mode_name, new):
-    if 1 == iteration:
+    if 0 == iteration:
         min_ = new["average"]
         max_ = new["average"]
     else:
@@ -24,7 +24,7 @@ def get_last_min_max(iteration, job, mode_name, new):
     return min_, max_
 
 def get_trends(iteration, job, mode_name, new):
-    if 1 == iteration:
+    if 0 == iteration:
         dynamic = 0.0
         global_ = 0.0
     else:
@@ -38,7 +38,11 @@ def algo():
     uber = Uber()
     jobs = mongo.get_pending_jobs()
     for job in jobs:
-        iteration = get_conf("number_of_iteration") - job["iteration"] + 1
+        if "uber" not in job["prices"].keys():
+            job["prices"]["uber"] = {}
+            
+        iteration = job["iteration"]["done"]
+
         print("[INFO] {} iter: {}".format(job["_id"], iteration))
         res = uber.get_estimation(job["from"]["coordinates"], job["to"]["coordinates"], job["seat_count"])
         for mode_name, mode in res["modes"].items():
@@ -52,13 +56,12 @@ def algo():
             d["min"], d["max"] = get_last_min_max(iteration, job, mode_name, d)
             d["dynamic_trend"], d["global_trend"] = get_trends(iteration, job, mode_name, d)
 
-            if "uber" not in job["prices"].keys():
-                job["prices"]["uber"] = {}
             if mode_name not in job["prices"]["uber"].keys():
                 job["prices"]["uber"][mode_name] = []
             job["prices"]["uber"][mode_name].append(d)
-        job["iteration"] -= 1
-        if 0 == job["iteration"]:
+        job["iteration"]["todo"] -= 1
+        job["iteration"]["done"] += 1
+        if 0 == job["iteration"]["todo"]:
             job["status"] = "done"
         mongo.update_item(job)
 algo()

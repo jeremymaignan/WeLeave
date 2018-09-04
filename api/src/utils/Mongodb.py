@@ -33,7 +33,7 @@ class Mongodb():
     def get_pending_jobs(self):
         return self.collection.find({
             "status": "pending",
-            "iteration": { "$gt": 0 }
+            "iteration.todo": { "$gt": 0 }
         })
 
     def update_item(self, job):
