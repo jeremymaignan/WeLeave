@@ -1,13 +1,19 @@
 # Uber Fare Trend Analytics
 
-## Run API & DB
+## Purpose:
+
+Analyse uber fare trends.
+
+![output_screenshot](https://github.com/jeremymaignan/uber-fare-trend-analytics/blob/master/screenshot.png)
+
+## API:
+
+### Run API & DB
 
 ```sh
 docker-compose up --build
 ```
 Mongo is now live: localhost:27017
-
-## API:
 
 ### Create ride: 
 ```sh
