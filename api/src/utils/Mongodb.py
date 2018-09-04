@@ -10,7 +10,7 @@ class Mongodb():
             get_conf("mongodb_port")
         )
         db = client['uber']
-        self.collection = db['job']
+        self.collection = db['rides']
     
     def get_item(self, id):
         try:
@@ -21,18 +21,20 @@ class Mongodb():
     def insert_item(self, item):
         return self.collection.insert_one(item).inserted_id
     
-    def update_item_status(self, id, changes):
-        return self.collection.update_one(
-            {'_id': ObjectId(id)},
-            {"$set": changes}
-        ).modified_count
+    def update_job(self, id, changes):
+        try: 
+            return self.collection.update_one(
+                {'_id': ObjectId(id)},
+                changes
+            ).modified_count
+        except:
+            return None
 
     def get_pending_jobs(self):
-        query =  {
+        return self.collection.find({
             "status": "pending",
             "iteration": { "$gt": 0 }
-        }
-        return self.collection.find(query)
+        })
 
     def update_item(self, job):
         return self.collection.save(job)

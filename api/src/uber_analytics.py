@@ -9,6 +9,7 @@ from utils.ConfManager import get_conf
 init_job_route = Blueprint('init_job', __name__)
 stop_job_route = Blueprint('stop_job', __name__)
 get_job_route = Blueprint('get_job', __name__)
+extend_job_route = Blueprint('extend_job', __name__)
 
 def build_item(data):
     geo = Geo()
@@ -49,29 +50,29 @@ def get_job(job_id):
     job["id"] = str(job["_id"])
     del job["_id"]
     if None == job:
-        return Response(
-            response=json.dumps({}),
-            status=404,
-            mimetype='application/json'
-        )
+        return Response(status=404)
     return Response(
         response=json.dumps(job),
         status=200,
         mimetype='application/json'
     )
 
+@extend_job_route.route("/uber/<job_id>",  methods=['PATCH'])
+def extend_job(job_id):
+    try:
+        iteration = json.loads(request.data)["iteration"]
+    except Exception as err:
+        return Response(status=404)
+    mongo = Mongodb()
+    result = mongo.update_job(job_id, {"$inc": {'iteration': iteration}})
+    if not result:
+        return Response(status=404)
+    return Response(status=200)
+
 @stop_job_route.route("/uber/<job_id>",  methods=['DELETE'])
 def stop_job(job_id):
     mongo = Mongodb()
-    result = mongo.update_item_status(job_id, {"status": "stoped"})
-    if 1 == result:
-        return Response(
-            response=json.dumps({}),
-            status=200,
-            mimetype='application/json'
-        )
-    return Response(
-        response=json.dumps({}),
-        status=404,
-        mimetype='application/json'
-    )
+    result = mongo.update_job(job_id, {"$set": {"status": "stoped"}})
+    if not result:
+        return Response(status=404)
+    return Response(status=200)
