@@ -36,7 +36,7 @@ def init_job():
     mongo = Mongodb()
     job_id = mongo.insert_item(item)
     return Response(
-        response="{}".format({"id": str(job_id)}),
+        response=json.dumps({"id": str(job_id)}),
         status=201,
         mimetype='application/json'
     )
@@ -50,12 +50,12 @@ def get_job(job_id):
     del job["_id"]
     if None == job:
         return Response(
-            response="",
+            response=json.dumps({}),
             status=404,
             mimetype='application/json'
         )
     return Response(
-        response="{}".format(job),
+        response=json.dumps(job),
         status=200,
         mimetype='application/json'
     )
@@ -66,12 +66,12 @@ def stop_job(job_id):
     result = mongo.update_item_status(job_id, {"status": "stoped"})
     if 1 == result:
         return Response(
-            response="",
-            status=201,
+            response=json.dumps({}),
+            status=200,
             mimetype='application/json'
         )
     return Response(
-        response="",
+        response=json.dumps({}),
         status=404,
         mimetype='application/json'
     )
