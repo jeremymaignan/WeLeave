@@ -8,7 +8,7 @@ class Mongodb():
         client = MongoClient(
             get_conf("mongodb_host"),
             get_conf("mongodb_port")
-        )
+        ) 
         db = client['uber']
         self.collection = db['rides']
     
@@ -30,10 +30,11 @@ class Mongodb():
         except:
             return None
 
-    def get_pending_jobs(self):
+    def get_pending_jobs(self, now):
         return self.collection.find({
             "status": "pending",
-            "iteration.todo": { "$gt": 0 }
+            "iteration.todo": { "$gt": 0 },
+            "start_at": {"$lt": now} 
         })
 
     def update_item(self, job):

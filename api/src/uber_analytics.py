@@ -16,6 +16,7 @@ def build_item(data):
     return {
         "user_id": data["user_id"],
         "created_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "start_at": data["start_at"],
         "from": {
             "address": data["from"],
             "coordinates": geo.get_geoloc(data["from"])

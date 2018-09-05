@@ -36,7 +36,7 @@ def algo():
     print("[INFO] {}".format(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     mongo = Mongodb()
     uber = Uber()
-    jobs = mongo.get_pending_jobs()
+    jobs = mongo.get_pending_jobs(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     for job in jobs:
         if "uber" not in job["prices"].keys():
             job["prices"]["uber"] = {}
