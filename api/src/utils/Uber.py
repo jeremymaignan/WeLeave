@@ -2,36 +2,45 @@ from utils.ConfManager import get_conf
 
 from uber_rides.session import Session
 from uber_rides.client import UberRidesClient
-from time import sleep, strftime
+from datetime import datetime
 
 class Uber():
     def __init__(self):
         self.token = get_conf("uber_app_id")
+        self.available_seats = {
+            "Pool": 2,
+            "UberX": 4,
+            "Green": 4,
+            "Van": 6,
+            "ACCESS": 4,
+            "Berline": 4
+        }
 
-    def get_estimation(self, from_, to, seat_count):
+    def get_estimation(self, from_, to, seat_count, iteration):
+        if seat_count > 2:
+            seat_count_uber_format = 2
+        else:
+            seat_count_uber_format = seat_count
         session = Session(server_token=self.token)
         client = UberRidesClient(session)
         response = client.get_price_estimates(
-            start_latitude= from_["lat"],
-            start_longitude= from_["long"],
-            end_latitude= to["lat"],
-            end_longitude= to["long"],
-            seat_count=seat_count
+            start_latitude= from_["coordinates"]["lat"],
+            start_longitude= from_["coordinates"]["long"],
+            end_latitude= to["coordinates"]["lat"],
+            end_longitude= to["coordinates"]["long"],
+            seat_count=seat_count_uber_format
         )
-        estimations = {
-            "modes": {}
-        }
+        estimations = {}
         response = response.json.get('prices')
         for mode in response:
-            estimations["modes"][mode["localized_display_name"]] = {
-                "prices": {
-                    "low": int(mode["low_estimate"]),
-                    "high": int(mode["high_estimate"]),
-                    "estimation": (int(mode["low_estimate"]) + int(mode["high_estimate"])) / 2.0
-                },
-                "ride_information": {
+            if self.available_seats[mode["localized_display_name"]] >= seat_count:
+                estimations[mode["localized_display_name"]] = {
+                    "price": (int(mode["low_estimate"]) + int(mode["high_estimate"])) / 2.0,
                     "distance": mode["distance"],
-                    "duration": mode["duration"] / 60
+                    "duration": mode["duration"] / 60,
+                    "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "iteration": iteration
                 }
-            }
         return estimations
+
+

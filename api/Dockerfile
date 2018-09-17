@@ -14,7 +14,6 @@ RUN apt-get update
 RUN apt-get -y upgrade
 RUN apt-get install -y cron
 RUN crontab engine.cron
-RUN cron
 
 ENTRYPOINT ["bash", "-c"]
 CMD ["/var/app/api/entrypoint.sh"]
