@@ -76,7 +76,6 @@ $curl -H "Content-Type: application/json" -X DELETE  http://0.0.0.0:5000/weleave
 
 ## Database schema:
 ```json
-/* 1 */
 {
     "_id" : ObjectId("5b9f7aa020a37a000afc5d09"),
     "user_id" : "Jeremy",
