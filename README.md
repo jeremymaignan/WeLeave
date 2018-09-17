@@ -38,6 +38,7 @@ $curl -H "Content-Type: application/json" -X GET http://0.0.0.0:5000/uber/5b86b8
 	"_id": "5b86b84981973b00073a3110",
 	"user_id": "jeremymaignan",
 	"created_at": "2018-08-29 15:14:17",
+	"start_at": "2018-08-29 15:12:17",
 	"from": {
 		"address": "paris",
 		"coordinates": {
