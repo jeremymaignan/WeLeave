@@ -9,7 +9,7 @@ class Mongodb():
             get_conf("mongodb_host"),
             get_conf("mongodb_port")
         ) 
-        db = client['uber']
+        db = client['weleave']
         self.collection = db['rides']
     
     def get_item(self, id):
