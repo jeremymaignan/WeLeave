@@ -45,7 +45,7 @@ def build_item(data):
         }
     }
 
-@init_job_route.route("/uber",  methods=['POST'])
+@init_job_route.route("/weleave",  methods=['POST'])
 def init_job():
     item = build_item(json.loads(request.data))
     if None == item:
@@ -68,7 +68,7 @@ def init_job():
         mimetype='application/json'
     )
 
-@get_job_route.route("/uber/<job_id>",  methods=['GET'])
+@get_job_route.route("/weleave/<job_id>",  methods=['GET'])
 def get_job(job_id):
     print("[INFO] Get job {}".format(job_id))
     mongo = Mongodb()
@@ -83,7 +83,7 @@ def get_job(job_id):
         mimetype='application/json'
     )
 
-@extend_job_route.route("/uber/<job_id>",  methods=['PATCH'])
+@extend_job_route.route("/weleave/<job_id>",  methods=['PATCH'])
 def extend_job(job_id):
     try:
         iteration = json.loads(request.data)["iteration"]
@@ -95,7 +95,7 @@ def extend_job(job_id):
         return Response(status=404)
     return Response(status=200)
 
-@stop_job_route.route("/uber/<job_id>",  methods=['DELETE'])
+@stop_job_route.route("/weleave/<job_id>",  methods=['DELETE'])
 def stop_job(job_id):
     mongo = Mongodb()
     result = mongo.update_job(job_id, {"$set": {"status": "stoped"}})
