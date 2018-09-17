@@ -3,6 +3,7 @@
 ## Purpose:
 
 Real time cab fare analytics.
+
 Supported apps:
 - Uber
 - Marcel
@@ -25,7 +26,7 @@ Mongo is now live: localhost:27017
 
 ### Create ride: 
 ```sh
-$curl -H "Content-Type: application/json" -X POST -d @payload.json http://0.0.0.0:5000/uber
+$curl -H "Content-Type: application/json" -X POST -d @payload.json http://0.0.0.0:5000/weleave
 ```
 ```json
 {
@@ -34,12 +35,12 @@ $curl -H "Content-Type: application/json" -X POST -d @payload.json http://0.0.0.
 ```
 ### Extend job: 
 ```sh
-$curl -H "Content-Type: application/json"  -X PATCH -d '{"iteration": 10}'  http://0.0.0.0:5000/uber/5b86b84981973b00073a3110
+$curl -H "Content-Type: application/json"  -X PATCH -d '{"iteration": 10}'  http://0.0.0.0:5000/weleave/5b86b84981973b00073a3110
 ```
 
 ### Get ride prices: 
 ```sh
-$curl -H "Content-Type: application/json" -X GET http://0.0.0.0:5000/uber/5b86b84981973b00073a3110
+$curl -H "Content-Type: application/json" -X GET http://0.0.0.0:5000/weleave/5b86b84981973b00073a3110
 ```
 ```json
 {
@@ -70,7 +71,7 @@ $curl -H "Content-Type: application/json" -X GET http://0.0.0.0:5000/uber/5b86b8
 
 ### Stop ride:
 ```sh
-$curl -H "Content-Type: application/json" -X DELETE  http://0.0.0.0:5000/uber/5b86b84981973b00073a3110
+$curl -H "Content-Type: application/json" -X DELETE  http://0.0.0.0:5000/weleave/5b86b84981973b00073a3110
 ```
 
 ## Database schema:
