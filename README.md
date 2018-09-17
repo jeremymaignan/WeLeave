@@ -1,8 +1,16 @@
-# Uber Fare Trend Analytics
+# WeLeave
 
 ## Purpose:
 
-Analyse uber fare trends.
+Real time cab fare analytics.
+Supported apps:
+- Uber
+- Marcel
+- SnapCar
+- Drive
+- Taxi G7
+- Hi Cab
+- Allocab
 
 ![output_screenshot](https://github.com/jeremymaignan/uber-fare-trend-analytics/blob/master/screenshot.png)
 
