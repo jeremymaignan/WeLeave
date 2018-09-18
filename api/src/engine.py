@@ -7,6 +7,7 @@ from utils.Allocab import Allocab
 from utils.G7 import G7
 from utils.Drive import Drive
 from utils.HiCab import HiCab
+from utils.Felix import Felix
 
 from datetime import datetime
 from pprint import pprint
@@ -48,7 +49,8 @@ def algo():
         "allocab": Allocab(),
         "g7": G7(),
         "drive": Drive(),
-        "hicab": HiCab()
+        "hicab": HiCab(),
+        "felix": Felix()
     }
 
     jobs = mongo.get_pending_jobs(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
