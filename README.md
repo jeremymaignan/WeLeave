@@ -12,6 +12,8 @@ Supported apps:
 - Taxi G7
 - Hi Cab
 - Allocab
+- Felix
+
 
 ![output_screenshot](https://github.com/jeremymaignan/uber-fare-trend-analytics/blob/master/screenshot.png)
 
