@@ -1,13 +1,15 @@
 from utils.Mongodb import Mongodb
-from utils.Uber import Uber
-from utils.Marcel import Marcel
 from utils.ConfManager import get_conf
-from utils.SnapCar import SnapCar
-from utils.Allocab import Allocab
-from utils.G7 import G7
-from utils.Drive import Drive
-from utils.HiCab import HiCab
-from utils.Felix import Felix
+
+from apps.Uber import Uber
+from apps.Marcel import Marcel
+
+from apps.SnapCar import SnapCar
+from apps.Allocab import Allocab
+from apps.G7 import G7
+from apps.Drive import Drive
+from apps.HiCab import HiCab
+from apps.Felix import Felix
 
 from datetime import datetime
 from pprint import pprint

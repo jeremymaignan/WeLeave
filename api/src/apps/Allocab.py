@@ -32,7 +32,6 @@ class Allocab():
             },
             "tripType": "DIRECTION",
             "datetime": datetime.now().strftime("%Y-%m-%dT%H:%M:00.000Z"),
-            "date": "sam. 15 septembre 2018",
             "flashFare": True,
             "timezone": "Europe/Paris",
             "session": None,
@@ -41,7 +40,7 @@ class Allocab():
             "feeditemid": None,
             "source": "WEBAPP"
         })
-
+        #            "date": "sam. 15 septembre 2018",
         response = requests.post(self.api_url["create"], headers=self.header, data=payload)
         if response.status_code == 200:
             data = response.json()

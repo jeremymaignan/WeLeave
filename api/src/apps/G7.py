@@ -39,7 +39,6 @@ class G7():
                 "longitude": to["coordinates"]["long"]
             }
         })
-        print(payload)
         estimations = {}
         response = requests.post(self.api_url, headers=self.header, data=payload)
         if response.status_code == 200:
