@@ -21,7 +21,7 @@ class Mongodb():
     def insert_item(self, item):
         return self.collection.insert_one(item).inserted_id
     
-    def update_job(self, id, changes):
+    def update_ride(self, id, changes):
         try: 
             return self.collection.update_one(
                 {'_id': ObjectId(id)},
@@ -30,12 +30,12 @@ class Mongodb():
         except:
             return None
 
-    def get_pending_jobs(self, now):
+    def get_pending_rides(self, now):
         return self.collection.find({
             "status": "pending",
             "iteration.todo": { "$gt": 0 },
             "start_at": {"$lt": now} 
         })
 
-    def update_item(self, job):
-        return self.collection.save(job)
+    def update_item(self, ride):
+        return self.collection.save(ride)
