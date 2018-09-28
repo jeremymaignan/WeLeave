@@ -1,9 +1,17 @@
 from flask import Flask
+import logging
+
 import api
 
 app = Flask(__name__)
-app.register_blueprint(api.init_job_route)
-app.register_blueprint(api.stop_job_route)
-app.register_blueprint(api.get_job_route)
-app.register_blueprint(api.extend_job_route)
-app.debug = True
+# Initial logger
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Register routes
+app.register_blueprint(api.init_ride_route)
+app.register_blueprint(api.stop_ride_route)
+app.register_blueprint(api.get_ride_route)
+app.register_blueprint(api.extend_ride_route)
+
+# Run api
+app.run(debug=True,  host='0.0.0.0', port=5000) # , ssl_context=('cert.pem', 'key.pem'))
