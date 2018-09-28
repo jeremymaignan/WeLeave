@@ -1,0 +1,101 @@
+from utils.Mongodb import Mongodb
+from utils.ConfManager import get_conf
+
+from apps.Uber import Uber
+from apps.Marcel import Marcel
+
+from apps.SnapCar import SnapCar
+from apps.Allocab import Allocab
+from apps.G7 import G7
+from apps.Drive import Drive
+from apps.HiCab import HiCab
+from apps.Felix import Felix
+
+from pprint import pprint
+from copy import deepcopy
+import logging
+
+# def get_last_min_max(iteration, job, mode_name, new):
+#     if 0 == iteration:
+#         min_ = new["price"]
+#         max_ = new["price"]
+#     else:
+#         last = job["prices"]["uber"][mode_name][-1]
+#         if new["average"] < last["min"]:
+#             print("[INFO] {} new min {}".format(mode_name, new["average"]))
+#             min_ = new["average"]
+#         else:
+#             min_ = last["min"]
+#         if new["average"] > last["max"]:
+#             print("[INFO] {} new max {}".format(mode_name, new["average"]))
+#             max_ = new["average"]
+#         else:
+#             max_ = last["max"]
+#     return min_, max_
+
+# def get_trends(iteration, job, mode_name, new):
+#     if 0 == iteration:
+#         dynamic = 0.0
+#         global_ = 0.0
+#     else:
+#         dynamic = new["average"] - job["prices"]["uber"][mode_name][-1]["average"]
+#         global_ = new["average"] - job["prices"]["uber"][mode_name][0]["average"]
+#     return dynamic, global_
+
+def get_fresh_estimation(job_id):
+    mongo = Mongodb()
+    job = mongo.get_item(job_id)
+    if not job:
+        logging.error('Job {} not found in DB'.format(job_id))
+        return 404, {}
+    providers = {
+        "uber": Uber(),
+        "marcel": Marcel(),
+        "snapcar": SnapCar(),
+        "allocab": Allocab(),
+        "g7": G7(),
+        #"drive": Drive(),
+        "hicab": HiCab(),
+        "felix": Felix()
+    }
+
+    iteration = job["iteration"]["done"]
+    logging.info("[{}] Iter: {} Seats: {} ".format(job["_id"], iteration + 1, job["seat_count"]))
+
+    # Make a copy of the job data except the previous estimations
+    fresh_estimations = deepcopy(job)
+    fresh_estimations["prices"] = {}
+    fresh_estimations["id"] = str(fresh_estimations["_id"])
+    del fresh_estimations["_id"]
+
+    for provider_name, provider in providers.items():
+        # Create key (app_name) in dict
+        if provider_name not in fresh_estimations["prices"].keys():
+            fresh_estimations["prices"][provider_name] = {}
+        if provider_name not in job["prices"].keys():
+            job["prices"][provider_name] = {}
+        logging.info("{}".format(provider_name.capitalize() ))
+        # Get estimations
+        data = provider.get_estimation(job["from"], job["to"], job["seat_count"], iteration)
+        for mode, estimation in data.items():
+            # Create key (mode) in dict
+            if mode not in job["prices"][provider_name].keys():
+                job["prices"][provider_name][mode] = []
+
+            fresh_estimations["prices"][provider_name][mode] = estimation
+            job["prices"][provider_name][mode].append(estimation)
+            
+    # Increase iteration
+    job["iteration"]["todo"] -= 1
+    job["iteration"]["done"] += 1
+    fresh_estimations["iteration"]["todo"] -= 1
+    fresh_estimations["iteration"]["done"] += 1
+    if 0 == job["iteration"]["todo"]:
+        job["status"] = "done"
+
+    mongo_response = mongo.update_item(job)
+    if str(job_id) != str(mongo_response):
+        logging.error("Cannot update job in DB. Error: {}".format(mongo_response))
+        return 500, {}
+    logging.info("{} [{}] Estimations updated".format(job["_id"], job["iteration"]["done"]))
+    return 200, fresh_estimations
