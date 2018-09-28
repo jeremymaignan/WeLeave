@@ -45,9 +45,12 @@ import logging
 def get_fresh_estimation(job_id):
     mongo = Mongodb()
     job = mongo.get_item(job_id)
+    if job["status"] == "done":
+        logging.info("Ride is already done")
+        return 200
     if not job:
         logging.error('Job {} not found in DB'.format(job_id))
-        return 404, {}
+        return 404
     providers = {
         "uber": Uber(),
         "marcel": Marcel(),
@@ -62,16 +65,8 @@ def get_fresh_estimation(job_id):
     iteration = job["iteration"]["done"]
     logging.info("[{}] Iter: {} Seats: {} ".format(job["_id"], iteration + 1, job["seat_count"]))
 
-    # Make a copy of the job data except the previous estimations
-    fresh_estimations = deepcopy(job)
-    fresh_estimations["prices"] = {}
-    fresh_estimations["id"] = str(fresh_estimations["_id"])
-    del fresh_estimations["_id"]
-
     for provider_name, provider in providers.items():
         # Create key (app_name) in dict
-        if provider_name not in fresh_estimations["prices"].keys():
-            fresh_estimations["prices"][provider_name] = {}
         if provider_name not in job["prices"].keys():
             job["prices"][provider_name] = {}
         logging.info("{}".format(provider_name.capitalize() ))
@@ -81,21 +76,17 @@ def get_fresh_estimation(job_id):
             # Create key (mode) in dict
             if mode not in job["prices"][provider_name].keys():
                 job["prices"][provider_name][mode] = []
-
-            fresh_estimations["prices"][provider_name][mode] = estimation
             job["prices"][provider_name][mode].append(estimation)
             
     # Increase iteration
     job["iteration"]["todo"] -= 1
     job["iteration"]["done"] += 1
-    fresh_estimations["iteration"]["todo"] -= 1
-    fresh_estimations["iteration"]["done"] += 1
     if 0 == job["iteration"]["todo"]:
         job["status"] = "done"
 
     mongo_response = mongo.update_item(job)
     if str(job_id) != str(mongo_response):
         logging.error("Cannot update job in DB. Error: {}".format(mongo_response))
-        return 500, {}
+        return 500
     logging.info("{} [{}] Estimations updated".format(job["_id"], job["iteration"]["done"]))
-    return 200, fresh_estimations
+    return 200
