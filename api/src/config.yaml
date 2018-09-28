@@ -1,5 +1,0 @@
-uber_app_id:  "YOUR_TOKEN"
-number_of_iteration: 15
-delta_between_requests: 120
-mongodb_host: "mongodb"
-mongodb_port: 27017
