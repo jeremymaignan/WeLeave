@@ -50,3 +50,6 @@ curl -H "Content-Type: application/json" -X POST -d '{
 "start_at": "2018-09-13 21:40:18"
 }' $url &&
 echo "\nDone" ;
+
+
+#curl -H "Content-Type: application/json" -X POST -d '{"from": {"address": "6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris, France", "zip_code": "75004"},"to":  {"address": "5 rue joseph riviere courbevoie", "zip_code": "92400"},"number_seat": 1,"user_id": "Jeremy","start_at": "2018-09-13 21:40:18"}' -k https://0.0.0.0:5000/weleave
