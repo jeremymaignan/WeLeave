@@ -7,12 +7,12 @@ COPY . /var/app/api/
 WORKDIR /var/app/api/
 EXPOSE 5000
 WORKDIR /var/app/api/
-RUN pip3.7 install -r requirements.txt
+RUN pip3.7 -q install -r requirements.txt
 
 # CRON
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN apt-get install -y cron
+RUN apt-get -qq update
+RUN apt-get -qq -y upgrade
+RUN apt-get -qq install -y cron
 RUN crontab engine.cron
 
 ENTRYPOINT ["bash", "-c"]
