@@ -10,6 +10,7 @@ from apps.G7 import G7
 from apps.Drive import Drive
 from apps.HiCab import HiCab
 from apps.Felix import Felix
+from apps.LeCab import LeCab
 
 from pprint import pprint
 from copy import deepcopy
@@ -59,7 +60,8 @@ def get_fresh_estimation(job_id):
         "g7": G7(),
         #"drive": Drive(),
         "hicab": HiCab(),
-        "felix": Felix()
+        "felix": Felix(),
+        "lecab": LeCab()
     }
 
     iteration = job["iteration"]["done"]

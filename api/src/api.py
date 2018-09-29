@@ -67,6 +67,9 @@ def get_ride(ride_id):
             return Response(status=500)
         logging.info("Estimations updated. id: {}".format(ride_id))
 
+    if 0 == size:
+        return Response(status=200)
+    
     # Get item and change id format
     mongo = Mongodb()
     result = mongo.get_item(ride_id)
