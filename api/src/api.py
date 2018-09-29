@@ -1,4 +1,4 @@
-from flask import Flask, Response, Blueprint, request
+from flask import Flask, Response, Blueprint, request, send_file
 import json
 import logging
 from urllib import parse
@@ -12,6 +12,7 @@ init_ride_route = Blueprint('init_ride', __name__)
 stop_ride_route = Blueprint('stop_ride', __name__)
 get_ride_route = Blueprint('get_ride', __name__)
 extend_ride_route = Blueprint('extend_ride', __name__)
+get_pic_route = Blueprint('get_pic', __name__)
 
 @init_ride_route.route("/weleave",  methods=['POST'])
 def init_ride():
@@ -48,7 +49,7 @@ def get_ride(ride_id):
         update = ast.literal_eval(qs["update"][0].capitalize())
         apps = qs["apps"]
         if 1 == len(apps) and apps[0] == "*":
-            apps = ["uber", "marcel", "snapcar", "allocab", "g7", "drive", "hicab", "felix"]
+            apps = ["uber", "marcel", "snapcar", "allocab", "g7", "drive", "hicab", "felix", "lecab"]
         else:
             apps = apps[0].split(",")
         logging.info("Size: {} Update: {} Apps: {}".format(size, update, apps))
@@ -115,7 +116,8 @@ def stop_ride(ride_id):
     logging.info("Stoped ride. id: {}".format(ride_id))
     return Response(status=200)
 
-
-
-
-
+@get_pic_route.route("/weleave/pictures/<app_name>",  methods=['GET'])
+def get_pic(app_name):
+    if app_name not in ["uber", "marcel", "snapcar", "allocab", "g7", "drive", "hicab", "felix", "lecab"]:
+        return Response(status=404)
+    return send_file("../assets/{}.jpg".format(app_name), mimetype='image/gif')
