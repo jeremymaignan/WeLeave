@@ -1,6 +1,7 @@
 from datetime import datetime
 import requests
 import json 
+import logging
 
 class Allocab():
     def __init__(self):
@@ -45,7 +46,7 @@ class Allocab():
         if response.status_code == 200:
             data = response.json()
             return data["id"], data["instantFareToken"]
-        print("[Error] Allocab API return {}".format(response.status_code))
+        logging.error("Allocab API return {}".format(response.status_code))
         return None, None
 
     def get_estimation(self, from_, to, seat_count, iteration):
@@ -70,8 +71,5 @@ class Allocab():
                             "iteration": iteration
                         }
             return estimations
-        print("[Error] Allocab API return {}".format(response.status_code))
+        logging.error("Allocab API return {}".format(response.status_code))
         return {}
-
-# a = Allocab()
-# print(a.get_estimations("5 Rue Joseph Rivi\\xe8re, Courbevoie, France", "4 Boulevard Haussmann, Paris-9E-Arrondissement, France", 60, 1))

@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+import logging
 
 class Drive():
     def __init__(self):
@@ -51,5 +52,5 @@ class Drive():
                         "iteration": iteration
                     }
                 else: 
-                    print("[Error] Drive API return {}".format(response.status_code))        
+                    logging.error("Drive API return {}".format(response.status_code))        
         return estimations

@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import requests
 import json
+import logging
 
 class G7():
     def __init__(self):
@@ -21,9 +22,9 @@ class G7():
     def get_estimation(self, from_, to, seat_count, iteration):
         if seat_count > 4:
             return {}
-        date = datetime.now() + timedelta(minutes=5)
+        date = datetime.now() + timedelta(hours=2, minutes=5)
         payload = json.dumps({
-            "dateTime": date.strftime("%Y-%m-%dT%H:%M:00.00+0200"),
+            "dateTime": date.strftime("%Y-%m-%dT%H:%M:59.59+0200"),
             "nbPassengersAdult": seat_count,
             "nbPassengersChild":0,
             "nbPassengersBaby":0,
@@ -57,5 +58,5 @@ class G7():
                         "iteration": iteration
                     }
             return estimations
-        print("[Error] G7 API return {} {}".format(response.status_code, response.json()))
+        logging.error("G7 API return {} [{}, {}]".format(response.status_code, response.json()["error"]["reason"], response.json()["error"]["message"]))
         return {}

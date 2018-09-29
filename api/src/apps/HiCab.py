@@ -1,6 +1,7 @@
 from datetime import datetime
 import requests
 import json
+import logging
 
 class HiCab():
 
@@ -79,5 +80,5 @@ class HiCab():
                         "iteration": iteration
                     }
                 else:
-                    print("\n[Error] HiCab API return {}".format(response.status_code))
+                    logging.error("HiCab API return {} [{}]".format(response.status_code, response.json()['error']['message']))
         return estimations

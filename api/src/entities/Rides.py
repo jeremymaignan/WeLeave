@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 
 from utils.Geo import Geo
 from utils.ConfManager import get_conf
@@ -8,12 +9,12 @@ class Rides:
         geo = Geo()
         from_geopos = geo.get_geoloc(data["from"]["address"])
         if {} == from_geopos:
-            print("[ERROR] Cannot find coordinates for {}".format(data["from"]["address"])) 
+            logging.error("Cannot find coordinates for {}".format(data["from"]["address"])) 
             self.ride = None
             return
         to_geopos = geo.get_geoloc(data["to"]["address"])
         if {} == to_geopos:
-            print("[ERROR] Cannot find coordinates for {}".format(data["to"]["address"])) 
+            logging.error("Cannot find coordinates for {}".format(data["to"]["address"])) 
             self.ride = None
             return
         self.ride = {

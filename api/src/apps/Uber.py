@@ -3,6 +3,7 @@ from utils.ConfManager import get_conf
 from uber_rides.session import Session
 from uber_rides.client import UberRidesClient
 from datetime import datetime
+import logging
 
 class Uber():
     def __init__(self):

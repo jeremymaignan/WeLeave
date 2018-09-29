@@ -1,5 +1,6 @@
 from datetime import datetime
 import requests
+import logging
 
 class SnapCar():
     def __init__(self):
@@ -29,4 +30,4 @@ class SnapCar():
                         "iteration": iteration
                     }
             return estimations
-        print("[Error] Snapcar API return {}".format(response.status_code))
+        logging.error("Snapcar API return {}".format(response.status_code))

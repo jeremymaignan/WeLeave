@@ -1,6 +1,7 @@
 from datetime import datetime
 import requests
 import json
+import logging
 
 class Felix():
     def __init__(self):
@@ -70,5 +71,5 @@ class Felix():
                         "iteration": iteration
                     }
                 else:
-                    print("\n[Error] Felix API return {}".format(response.status_code))
+                    logging.error("Felix API return {}".format(response.status_code))
         return estimations

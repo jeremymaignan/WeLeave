@@ -1,5 +1,5 @@
 import requests
-from pprint import pprint
+import logging
 from datetime import datetime
 
 class Marcel():
@@ -49,7 +49,7 @@ class Marcel():
         response = requests.post(self.api_url, json=payload)
         if response.status_code == 201:
             return response.json()
-        print("[Error] Marcel API return {} {}".format(response.status_code, response.json()))  
+        logging.error("Marcel API return {} [{}]".format(response.status_code, response.json()["error"]["message"]))  
         return {}
 
     def get_estimation(self, address_pick_up, address_drop_off, nb_seats, iteration):

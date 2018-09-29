@@ -1,4 +1,5 @@
 from geopy.geocoders import Nominatim
+import logging
 
 class Geo():
     def get_geoloc(self, address):
@@ -10,5 +11,5 @@ class Geo():
                 "long": location.longitude
             }
         except Exception as err:
-            print("[ERROR] Cannot find geoloc. {}".format(err))
+            logging.error("Cannot find geoloc. {}".format(err))
             return {}

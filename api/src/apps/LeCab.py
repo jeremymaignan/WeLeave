@@ -112,8 +112,5 @@ class LeCab():
                         "iteration": iteration
                     }
                 else:
-                    logging.error("\n[Error] LeCab API return {}".format(response.status_code))
+                    logging.error("LeCab API return {}".format(response.status_code))
         return estimations
-
-# lc = LeCab()
-# print(lc.get_estimation({}, {}, 4, 1))
