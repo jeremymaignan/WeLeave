@@ -1,5 +1,16 @@
 uber_app_id:  "THaQ8ljU7uVZCbNcanU4gVa4JrXpukHiQyewnqBv"
 number_of_iteration: 15
 delta_between_requests: 120
-mongodb_host: "0.0.0.0" #mongodb"
+mongodb_host: "mongodb"
 mongodb_port: 27017
+apps:
+- 'uber'
+- 'marcel'
+- 'snapcar'
+- 'allocab'
+- 'g7'
+- 'drive'
+- 'hicab'
+- 'felix'
+- 'lecab'
+api_hostname: "http://0.0.0.0:5000"
