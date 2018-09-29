@@ -11,7 +11,7 @@ def scheduler():
     async_list = []
     for ride in rides:
         logging.info(ride["_id"])
-        action_item = grequests.get("http://0.0.0.0:5000/weleave/{}?size=0&update=True&apps=*".format(ride["_id"])) #,  verify=False)
+        action_item = grequests.get("http://0.0.0.0:5000/rides/{}?size=0&update=True&apps=*".format(ride["_id"])) #,  verify=False)
         async_list.append(action_item)
         #requests.get("http://0.0.0.0:5000/weleave/{}".format(ride["_id"]))
     grequests.map(async_list)

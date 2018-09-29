@@ -12,9 +12,10 @@ init_ride_route = Blueprint('init_ride', __name__)
 stop_ride_route = Blueprint('stop_ride', __name__)
 get_ride_route = Blueprint('get_ride', __name__)
 extend_ride_route = Blueprint('extend_ride', __name__)
-get_pic_route = Blueprint('get_pic', __name__)
+get_apps_picture_route = Blueprint('get_apps_picture', __name__)
+get_apps_details_route = Blueprint('get_apps_details', __name__)
 
-@init_ride_route.route("/weleave",  methods=['POST'])
+@init_ride_route.route("/rides",  methods=['POST'])
 def init_ride():
     ride = Rides(json.loads(request.data)).get_ride()
     if None == ride:
@@ -40,7 +41,7 @@ def init_ride():
         mimetype='application/json'
     )
 
-@get_ride_route.route("/weleave/<ride_id>",  methods=['GET'])
+@get_ride_route.route("/rides/<ride_id>",  methods=['GET'])
 def get_ride(ride_id):
     # Parse query params:
     try:
@@ -91,7 +92,7 @@ def get_ride(ride_id):
         mimetype='application/json'
     )
 
-@extend_ride_route.route("/weleave/<ride_id>",  methods=['PATCH'])
+@extend_ride_route.route("/rides/<ride_id>",  methods=['PATCH'])
 def extend_ride(ride_id):
     try:
         iteration = json.loads(request.data)["iteration"]
@@ -106,7 +107,7 @@ def extend_ride(ride_id):
     logging.info("Increased number of iteration. id: {}".format(ride_id))
     return Response(status=200)
 
-@stop_ride_route.route("/weleave/<ride_id>",  methods=['DELETE'])
+@stop_ride_route.route("/rides/<ride_id>",  methods=['DELETE'])
 def stop_ride(ride_id):
     mongo = Mongodb()
     result = mongo.update_ride(ride_id, {"$set": {"status": "stoped"}})
@@ -116,8 +117,55 @@ def stop_ride(ride_id):
     logging.info("Stoped ride. id: {}".format(ride_id))
     return Response(status=200)
 
-@get_pic_route.route("/weleave/pictures/<app_name>",  methods=['GET'])
-def get_pic(app_name):
+@get_apps_picture_route.route("/apps/pictures/<app_name>",  methods=['GET'])
+def get_apps_picture(app_name):
     if app_name not in ["uber", "marcel", "snapcar", "allocab", "g7", "drive", "hicab", "felix", "lecab"]:
         return Response(status=404)
     return send_file("../assets/{}.jpg".format(app_name), mimetype='image/gif')
+
+@get_apps_details_route.route("/apps",  methods=['GET'])
+def get_apps_details():
+    return Response(
+        response=json.dumps({
+            "apps": {
+                "uber": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/uber",
+                    "deeplink": ""                    
+                },
+                "marcel": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/marcel",
+                    "deeplink": ""                    
+                },
+                "snapcar": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/snapcar",
+                    "deeplink": ""                    
+                },
+                "allocab": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/allocab",
+                    "deeplink": ""                    
+                },
+                "g7": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/g7",
+                    "deeplink": ""                    
+                },
+                "drive": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/drive",
+                    "deeplink": ""                    
+                },
+                "hicab": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/hicab",
+                    "deeplink": ""                    
+                },
+                "felix": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/felix",
+                    "deeplink": ""                    
+                },
+                "lecab": {
+                    "picture_link": "http://0.0.0.0:5000/apps/pictures/lecab",
+                    "deeplink": ""                    
+                }
+            }
+        }),
+        status=200,
+        mimetype='application/json'
+    )

@@ -104,13 +104,16 @@ class LeCab():
                 response = requests.post(self.api_url, headers=self.header, data=payload)
                 if response.status_code == 200:
                     data = response.json()
-                    estimations[mode] = {
-                        "distance" : data["priceIncreaseDetails"]["distance"],
-                        #"duration" : data["duration"],
-                        "price": data["price"]["gross"]["value"],
-                        "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                        "iteration": iteration
-                    }
+                    try:
+                        estimations[mode] = {
+                            "distance" : data["priceIncreaseDetails"]["distance"],
+                            #"duration" : data["duration"],
+                            "price": data["price"]["gross"]["value"],
+                            "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                            "iteration": iteration
+                        }
+                    except Exception as err:
+                        logging.error("LeCab API return {} [{}]".format(response.status_code, data["errorMessage"]))
                 else:
-                    logging.error("LeCab API return {}".format(response.status_code))
+                    logging.error("LeCab API return {} [{}]".format(response.status_code, data["errorMessage"]))
         return estimations

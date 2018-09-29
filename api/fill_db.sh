@@ -1,5 +1,5 @@
 date_now="`date +'%Y-%m-%d %H:%M:%S'`"
-url="http://0.0.0.0:5000/weleave"
+url="http://0.0.0.0:5000/rides"
 echo $date_now
 
 curl -H "Content-Type: application/json" -X POST -d '{
