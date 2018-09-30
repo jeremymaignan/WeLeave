@@ -2,6 +2,7 @@ from utils.ConfManager import get_conf
 
 from pymongo import MongoClient
 from bson import ObjectId
+import logging
 
 class Mongodb():
     def __init__(self):
@@ -27,7 +28,8 @@ class Mongodb():
                 {'_id': ObjectId(id)},
                 changes
             ).modified_count
-        except:
+        except Exception as err:
+            logging.error("Cannot update iteration of ride in DB. Error: {}".format(err))
             return None
 
     def get_pending_rides(self, now):

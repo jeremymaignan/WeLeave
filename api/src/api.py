@@ -96,12 +96,12 @@ def get_ride(ride_id):
 @extend_ride_route.route("/rides/<ride_id>",  methods=['PATCH'])
 def extend_ride(ride_id):
     try:
-        iteration = json.loads(request.data)["iteration"]
+        iteration = int(json.loads(request.data)["iteration"])
     except Exception as err:
         logging.error("Bad Request. Error: {}".format(err))
         return Response(status=400)
     mongo = Mongodb()
-    result = mongo.update_ride(ride_id, {"$inc": {'iteration': {"todo": iteration}}})
+    result = mongo.update_ride(ride_id, {"$inc": {'iteration.todo': iteration}})
     if not result:
         logging.error("Not found. id: {}".format(ride_id))
         return Response(status=404)
@@ -130,43 +130,41 @@ def get_apps_details():
     logging.info(hostname)
     return Response(
         response=json.dumps({
-            "apps": {
-                "uber": {
-                    "picture_link": "{}/apps/pictures/uber".format(hostname),
-                    "deeplink": ""                    
-                },
-                "marcel": {
-                    "picture_link": "{}/apps/pictures/marcel".format(hostname),
-                    "deeplink": ""                    
-                },
-                "snapcar": {
-                    "picture_link": "{}/apps/pictures/snapcar".format(hostname),
-                    "deeplink": ""                    
-                },
-                "allocab": {
-                    "picture_link": "{}/apps/pictures/allocab".format(hostname),
-                    "deeplink": ""                    
-                },
-                "g7": {
-                    "picture_link": "{}/apps/pictures/g7".format(hostname),
-                    "deeplink": ""                    
-                },
-                "drive": {
-                    "picture_link": "{}/apps/pictures/drive".format(hostname),
-                    "deeplink": ""                    
-                },
-                "hicab": {
-                    "picture_link": "{}/apps/pictures/hicab".format(hostname),
-                    "deeplink": ""                    
-                },
-                "felix": {
-                    "picture_link": "{}/apps/pictures/felix".format(hostname),
-                    "deeplink": ""                    
-                },
-                "lecab": {
-                    "picture_link": "{}/apps/pictures/lecab".format(hostname),
-                    "deeplink": ""                    
-                }
+            "uber": {
+                "picture_link": "{}/apps/pictures/uber".format(hostname),
+                "deeplink": ""
+            },
+            "marcel": {
+                "picture_link": "{}/apps/pictures/marcel".format(hostname),
+                "deeplink": ""
+            },
+            "snapcar": {
+                "picture_link": "{}/apps/pictures/snapcar".format(hostname),
+                "deeplink": ""
+            },
+            "allocab": {
+                "picture_link": "{}/apps/pictures/allocab".format(hostname),
+                "deeplink": ""
+            },
+            "g7": {
+                "picture_link": "{}/apps/pictures/g7".format(hostname),
+                "deeplink": ""
+            },
+            "drive": {
+                "picture_link": "{}/apps/pictures/drive".format(hostname),
+                "deeplink": ""
+            },
+            "hicab": {
+                "picture_link": "{}/apps/pictures/hicab".format(hostname),
+                "deeplink": ""
+            },
+            "felix": {
+                "picture_link": "{}/apps/pictures/felix".format(hostname),
+                "deeplink": ""
+            },
+            "lecab": {
+                "picture_link": "{}/apps/pictures/lecab".format(hostname),
+                "deeplink": ""
             }
         }),
         status=200,
