@@ -21,6 +21,8 @@ services:
       - mongodb:mongodb
     ports: 
       - "5000:5000"
+    volumes:
+    - ./api/logs/:/logs/
   swagger:
     image: lukastosic/swaggerui-docker
     restart: always

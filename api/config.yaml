@@ -14,3 +14,4 @@ apps:
 - 'felix'
 - 'lecab'
 api_hostname: "http://0.0.0.0:5000"
+log_in_file: False

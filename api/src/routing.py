@@ -1,11 +1,18 @@
 from flask import Flask
 import logging
 
+from datetime import datetime
+from utils.ConfManager import get_conf
 import api
 
 app = Flask(__name__)
 # Initial logger
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+if get_conf("log_in_file"):
+    filename = '/logs/weleave_api_{}.log'.format(datetime.now().strftime('%Y-%m-%d'))
+    logging.basicConfig(filename=filename, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.info("Redirect logs to {}".format(filename))
+else:
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Register routes
 app.register_blueprint(api.init_ride_route)
