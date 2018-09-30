@@ -21,3 +21,10 @@ services:
       - mongodb:mongodb
     ports: 
       - "5000:5000"
+  swagger:
+    image: lukastosic/swaggerui-docker
+    restart: always
+    volumes:
+      - ./api/swagger.json:/app/swagger.json
+    ports:
+      - "80:80"
