@@ -13,7 +13,7 @@ Supported apps:
 - Hi Cab
 - Allocab
 - Felix
-- lecab
+- Lecab
 
 
 ![output_screenshot](https://github.com/jeremymaignan/uber-fare-trend-analytics/blob/master/screenshot.png)
@@ -22,8 +22,10 @@ Supported apps:
 ```sh
 docker-compose up --build
 ```
-Mongo: **localhost:27017**
+**MongoDB:** localhost:27017
 
-Swagger: **localhost:80**
+**Swagger:** localhost:80
 
-API: **0.0.0.0:5000**
+**API:** 0.0.0.0:5000
+
+**API Monitoring Dashboard:** 0.0.0.0:5000/dashboard/login (Cred: admin/admin)
