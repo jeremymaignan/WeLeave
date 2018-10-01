@@ -28,4 +28,4 @@ docker-compose up --build
 
 **API:** 0.0.0.0:5000
 
-**API Monitoring Dashboard:** 0.0.0.0:5000/dashboard/login (Cred: admin/admin)
+**API Monitoring Dashboard:** 0.0.0.0:5000/dashboard/login (Creds: admin/admin)
