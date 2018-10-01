@@ -1,11 +1,13 @@
 from flask import Flask
 import logging
+import flask_monitoringdashboard as dashboard
 
 from datetime import datetime
 from utils.ConfManager import get_conf
 import api
 
 app = Flask(__name__)
+dashboard.bind(app)
 # Initial logger
 if get_conf("log_in_file"):
     filename = '/logs/weleave_api_{}.log'.format(datetime.now().strftime('%Y-%m-%d'))
