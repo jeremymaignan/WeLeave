@@ -21,6 +21,7 @@ services:
       - "5000:5000"
     volumes:
     - ./api/logs/:/logs/
+    - ./api/:/var/app/api/
   swagger:
     image: lukastosic/swaggerui-docker
     restart: always
