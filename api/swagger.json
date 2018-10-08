@@ -1,35 +1,261 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "description": "WeLeave API doc",
-    "version": "1.0.0",
-    "title": "WeLeave",
-    "contact": {
-      "email": "jeremy.maignan@gmail.com"
+  "basePath": "/",
+  "definitions": {
+    "Apps_details": {
+      "properties": {
+        "app_name": {
+          "properties": {
+            "deeplink": {
+              "example": "",
+              "type": "string"
+            },
+            "picture_link": {
+              "example": "http://0.0.0.0:5000/apps/pictures/uber",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Iterations": {
+      "properties": {
+        "id": {
+          "example": "123456789",
+          "type": "integer"
+        }
+      }
+    },
+    "Ride": {
+      "properties": {
+        "from": {
+          "properties": {
+            "address": {
+              "example": "5 rue joseph riviere courbevoie",
+              "type": "string"
+            },
+            "zip_code": {
+              "example": "92400",
+              "type": "string"
+            }
+          },
+          "required": [
+            "address",
+            "zip_code"
+          ],
+          "type": "object"
+        },
+        "number_seat": {
+          "example": 2,
+          "type": "integer"
+        },
+        "start_at": {
+          "example": "2018-09-13 21:40:18",
+          "type": "string"
+        },
+        "to": {
+          "properties": {
+            "address": {
+              "example": "5 rue joseph riviere courbevoie",
+              "type": "string"
+            },
+            "zip_code": {
+              "example": "92400",
+              "type": "string"
+            }
+          },
+          "required": [
+            "address",
+            "zip_code"
+          ],
+          "type": "object"
+        },
+        "user_id": {
+          "example": "jeremy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "number_seat",
+        "user_id",
+        "start_at"
+      ],
+      "type": "object"
+    },
+    "Ride_created": {
+      "properties": {
+        "id": {
+          "example": "123456789",
+          "type": "string"
+        }
+      }
+    },
+    "Ride_estimations": {
+      "properties": {
+        "created_at": {
+          "example": "2018-09-13 21:40:18",
+          "type": "string"
+        },
+        "from": {
+          "properties": {
+            "address": {
+              "example": "5 rue joseph riviere courbevoie",
+              "type": "string"
+            },
+            "coordinates": {
+              "properties": {
+                "lat": {
+                  "example": 48.85293695,
+                  "type": "number"
+                },
+                "long": {
+                  "example": 2.35005149954546,
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "zip_code": {
+              "example": "92400",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "id": {
+          "example": "123456789",
+          "type": "string"
+        },
+        "iteration": {
+          "properties": {
+            "done": {
+              "example": 1,
+              "type": "integer"
+            },
+            "todo": {
+              "example": 14,
+              "type": "integer"
+            }
+          },
+          "type": "object"
+        },
+        "prices": {
+          "type": "object"
+        },
+        "seat_count": {
+          "example": 2,
+          "type": "integer"
+        },
+        "start_at": {
+          "example": "2018-09-13 21:40:18",
+          "type": "string"
+        },
+        "status": {
+          "example": "pending",
+          "type": "string"
+        },
+        "to": {
+          "properties": {
+            "address": {
+              "example": "5 rue joseph riviere courbevoie",
+              "type": "string"
+            },
+            "coordinates": {
+              "properties": {
+                "lat": {
+                  "example": 48.85293695,
+                  "type": "number"
+                },
+                "long": {
+                  "example": 2.35005149954546,
+                  "type": "number"
+                }
+              },
+              "type": "object"
+            },
+            "zip_code": {
+              "example": "92400",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "user_id": {
+          "example": "jeremy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "user_id",
+        "created_at",
+        "start_at",
+        "from",
+        "to",
+        "iteration",
+        "status",
+        "seat_count",
+        "prices"
+      ],
+      "type": "object"
+    },
+    "Users_details": {
+      "properties": {
+        "addresses": {
+          "type": "object",
+          "description": "Key: label, value, address"
+        },
+        "created_at": {
+          "example": "2018-09-13 21:40:19",
+          "type": "string"
+        },
+        "id": {
+          "example": "5bb24032177631000b5bc1ced",
+          "type": "string"
+        },
+        "nb_rides": {
+          "example": 2,
+          "type": "integer"
+        },
+        "updated_at": {
+          "example": "2018-09-13 21:40:18",
+          "type": "string"
+        },
+        "user_id": {
+          "example": "jeremy",
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "created_at",
+        "updated_at",
+        "addresses",
+        "nb_rides",
+        "id"
+      ],
+      "type": "object"
     }
   },
   "host": "0.0.0.0:5000",
-  "basePath": "/",
-  "tags": [
-    {
-      "name": "Rides",
-      "description": "Manage user's rides"
-    }
-  ],
-  "schemes": [
-    "http"
-  ],
+  "info": {
+    "contact": {
+      "email": "jeremy.maignan@gmail.com"
+    },
+    "description": "WeLeave API doc",
+    "title": "WeLeave",
+    "version": "1.0.0"
+  },
   "paths": {
     "/apps": {
       "get": {
-        "tags": [
-          "Apps"
-        ],
-        "summary": "Get details apps",
-        "description": "Get details apps",
         "consumes": [
           "application/json"
         ],
+        "description": "Get details apps",
         "responses": {
           "200": {
             "description": "",
@@ -37,24 +263,24 @@
               "$ref": "#/definitions/Apps_details"
             }
           }
-        }
+        },
+        "summary": "Get details apps",
+        "tags": [
+          "Apps"
+        ]
       }
     },
     "/apps/pictures/{app_name}": {
       "get": {
-        "tags": [
-          "Apps"
-        ],
-        "summary": "Get picture of each apps",
-        "description": "Get pictures of each apps",
         "consumes": [
           "application/json"
         ],
+        "description": "Get pictures of each apps",
         "parameters": [
           {
+            "description": "name of the app",
             "in": "path",
             "name": "app_name",
-            "description": "name of the app",
             "required": true,
             "type": "string"
           }
@@ -66,24 +292,24 @@
           "404": {
             "description": ""
           }
-        }
+        },
+        "summary": "Get picture of each apps",
+        "tags": [
+          "Apps"
+        ]
       }
     },
     "/rides": {
       "post": {
-        "tags": [
-          "Rides"
-        ],
-        "summary": "Create a new ride",
-        "description": "Create a new ride",
         "consumes": [
           "application/json"
         ],
+        "description": "Create a new ride",
         "parameters": [
           {
+            "description": "Ride details",
             "in": "body",
             "name": "body",
-            "description": "Ride details",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Ride"
@@ -100,24 +326,24 @@
           "400": {
             "description": ""
           }
-        }
+        },
+        "summary": "Create a new ride",
+        "tags": [
+          "Rides"
+        ]
       }
     },
     "/rides/{ride_id}": {
       "delete": {
-        "tags": [
-          "Rides"
+        "consumes": [
+          "application/json"
         ],
-        "summary": "Stop a ride",
         "description": "Stop a ride",
-        "consumes": [
-          "application/json"
-        ],
         "parameters": [
           {
+            "description": "ID of the ride",
             "in": "path",
             "name": "ride_id",
-            "description": "ID of the ride",
             "required": true,
             "type": "string"
           }
@@ -129,61 +355,43 @@
           "404": {
             "description": ""
           }
-        }
-      },
-      "patch": {
+        },
+        "summary": "Stop a ride",
         "tags": [
           "Rides"
-        ],
-        "summary": "Increase iterations",
-        "description": "Increase iterations",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "ride_id",
-            "description": "ID of the ride",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Number of iteration to add",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/Iterations"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": ""
-          },
-          "400": {
-            "description": ""
-          },
-          "404": {
-            "description": ""
-          }
-        }
+        ]
       },
       "get": {
-        "tags": [
-          "Rides"
-        ],
-        "summary": "Get ride estimations and update estimations",
-        "description": "Get ride estimations and update estimations",
         "consumes": [
           "application/json"
         ],
+        "description": "Get ride estimations and update estimations",
         "parameters": [
           {
+            "description": "The number of iteration to fetch",
+            "in": "query",
+            "name": "size",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "description": "Decide if API update estimations (True or False)",
+            "in": "query",
+            "name": "update",
+            "required": true,
+            "type": "boolean"
+          },
+          {
+            "description": "List of apps you want to fetch data from, coma separated (* for all)",
+            "in": "query",
+            "name": "apps",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "ID of the ride",
             "in": "path",
             "name": "ride_id",
-            "description": "ID of the ride",
             "required": true,
             "type": "string"
           }
@@ -204,211 +412,98 @@
           "500": {
             "description": ""
           }
-        }
+        },
+        "summary": "Get ride estimations and update estimations",
+        "tags": [
+          "Rides"
+        ]
+      },
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Increase iterations",
+        "parameters": [
+          {
+            "description": "ID of the ride",
+            "in": "path",
+            "name": "ride_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Number of iteration to add",
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Iterations"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          },
+          "400": {
+            "description": ""
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "summary": "Increase iterations",
+        "tags": [
+          "Rides"
+        ]
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "description": "ID of the user",
+            "in": "path",
+            "name": "user_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Users_details"
+            }
+          },
+          "404": {
+            "description": ""
+          }
+        },
+        "summary": "",
+        "tags": [
+          "User"
+        ]
       }
     }
   },
-  "definitions": {
-    "Iterations": {
-      "properties": {
-        "id": {
-          "type": "integer",
-          "example": "123456789"
-        }
-      }
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "tags": [
+    {
+      "name": "Rides"
     },
-    "Ride_created": {
-      "properties": {
-        "id": {
-          "type": "string",
-          "example": "123456789"
-        }
-      }
+    {
+      "name": "Apps"
     },
-    "Apps_details": {
-      "type": "object",
-      "properties": {
-        "app_name": {
-          "type": "object",
-          "properties": {
-            "picture_link": {
-              "type": "string",
-              "example": "http://0.0.0.0:5000/apps/pictures/uber"
-            },
-            "deeplink": {
-              "type": "string",
-              "example": ""
-            }
-          }
-        }
-      }
-    },
-    "Ride_estimations": {
-      "type": "object",
-      "required": [
-        "id",
-        "user_id",
-        "created_at",
-        "start_at",
-        "from",
-        "to",
-        "iteration",
-        "status",
-        "seat_count",
-        "prices"
-      ],
-      "properties": {
-        "id": {
-          "type": "string",
-          "example": "123456789"
-        },
-        "user_id": {
-          "type": "string",
-          "example": "jeremy"
-        },
-        "created_at": {
-          "type": "string",
-          "example": "2018-09-13 21:40:18"
-        },
-        "start_at": {
-          "type": "string",
-          "example": "2018-09-13 21:40:18"
-        },
-        "from": {
-          "type": "object",
-          "properties": {
-            "address": {
-              "type": "string",
-              "example": "5 rue joseph riviere courbevoie"
-            },
-            "zip_code": {
-              "type": "string",
-              "example": "92400"
-            },
-            "coordinates": {
-              "type": "object",
-              "properties": {
-                "lat": {
-                  "type": "number",
-                  "example": 48.85293695
-                },
-                "long": {
-                  "type": "number",
-                  "example": 2.35005149954546
-                }
-              }
-            }
-          }
-        },
-        "to": {
-          "type": "object",
-          "properties": {
-            "address": {
-              "type": "string",
-              "example": "5 rue joseph riviere courbevoie"
-            },
-            "zip_code": {
-              "type": "string",
-              "example": "92400"
-            },
-            "coordinates": {
-              "type": "object",
-              "properties": {
-                "lat": {
-                  "type": "number",
-                  "example": 48.85293695
-                },
-                "long": {
-                  "type": "number",
-                  "example": 2.35005149954546
-                }
-              }
-            }
-          }
-        },
-        "iteration": {
-          "type": "object",
-          "properties": {
-            "todo": {
-              "type": "integer",
-              "example": 14
-            },
-            "done": {
-              "type": "integer",
-              "example": 1
-            }
-          }
-        },
-        "status": {
-          "type": "string",
-          "example": "pending"
-        },
-        "seat_count": {
-          "type": "integer",
-          "example": 2
-        },
-        "prices": {
-          "type": "object"
-        }
-      }
-    },
-    "Ride": {
-      "type": "object",
-      "required": [
-        "from",
-        "to",
-        "number_seat",
-        "user_id",
-        "start_at"
-      ],
-      "properties": {
-        "from": {
-          "type": "object",
-          "required": [
-            "address",
-            "zip_code"
-          ],
-          "properties": {
-            "address": {
-              "type": "string",
-              "example": "5 rue joseph riviere courbevoie"
-            },
-            "zip_code": {
-              "type": "string",
-              "example": "92400"
-            }
-          }
-        },
-        "to": {
-          "type": "object",
-          "required": [
-            "address",
-            "zip_code"
-          ],
-          "properties": {
-            "address": {
-              "type": "string",
-              "example": "5 rue joseph riviere courbevoie"
-            },
-            "zip_code": {
-              "type": "string",
-              "example": "92400"
-            }
-          }
-        },
-        "number_seat": {
-          "type": "integer",
-          "example": 2
-        },
-        "user_id": {
-          "type": "string",
-          "example": "jeremy"
-        },
-        "start_at": {
-          "type": "string",
-          "example": "2018-09-13 21:40:18"
-        }
-      }
+    {
+      "name": "Users"
     }
-  }
+  ]
 }
