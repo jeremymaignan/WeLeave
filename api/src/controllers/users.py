@@ -42,7 +42,7 @@ def add_user_address(user_id):
             }
         }
     )
-    if not response:
+    if response["nModified"] == 0:
         return Response(status=404)
     logging.info("Address added to user {}".format(user_id))
     return Response(status=201)
