@@ -42,6 +42,19 @@ def get_user():
         print("Get user [KO]")
         return False
 
+def add_address():
+    payload = {
+        "address": "5 rue joseph riviere courbevoie",
+        "label": "home"
+    }
+    res = requests.post("{}/users/jeremy/addresses".format(hostname), json=payload)
+    if 201 == res.status_code:
+        print("Add address [OK]")
+        return True
+    else:
+        print("Add address [KO]")
+        return False
+
 def get_app():
     res = requests.get("{}/apps".format(hostname))
     if 200 == res.status_code:
@@ -55,4 +68,5 @@ id = create_job()
 if id:
     get_estimation(id)
 get_user()
+add_address()
 get_app()
