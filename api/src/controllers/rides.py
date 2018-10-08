@@ -1,20 +1,21 @@
-from flask import Flask, Response, Blueprint, request, send_file
+from flask import Flask, Response, Blueprint, request
 import json
+from datetime import datetime
 import logging
 from urllib import parse
+from bson import ObjectId
 import ast
 
 from utils.Mongodb import Mongodb
 from utils.ConfManager import get_conf
 from entities.Rides import Rides
 from utils.engine import get_fresh_estimation
+from controllers.users import create_user
 
 init_ride_route = Blueprint('init_ride', __name__)
 stop_ride_route = Blueprint('stop_ride', __name__)
 get_ride_route = Blueprint('get_ride', __name__)
 extend_ride_route = Blueprint('extend_ride', __name__)
-get_apps_picture_route = Blueprint('get_apps_picture', __name__)
-get_apps_details_route = Blueprint('get_apps_details', __name__)
 
 @init_ride_route.route("/rides",  methods=['POST'])
 def init_ride():
@@ -33,8 +34,9 @@ def init_ride():
             status=400,
             mimetype='application/json'
         )
-    mongo = Mongodb()
+    mongo = Mongodb('rides')
     ride_id = mongo.insert_item(ride)
+    create_user(ride["user_id"])
     logging.info("Ride created. id: {}".format(ride_id))
     return Response(
         response=json.dumps({"id": str(ride_id)}),
@@ -74,8 +76,8 @@ def get_ride(ride_id):
         return Response(status=200)
     
     # Get item and change id format
-    mongo = Mongodb()
-    result = mongo.get_item(ride_id)
+    mongo = Mongodb('rides')
+    result = mongo.get_item({"_id": ObjectId(ride_id)})
     result["id"] = str(result["_id"])
     del result["_id"]
 
@@ -100,7 +102,7 @@ def extend_ride(ride_id):
     except Exception as err:
         logging.error("Bad Request. Error: {}".format(err))
         return Response(status=400)
-    mongo = Mongodb()
+    mongo = Mongodb('rides')
     result = mongo.update_ride(ride_id, {"$inc": {'iteration.todo': iteration}})
     if not result:
         logging.error("Not found. id: {}".format(ride_id))
@@ -110,63 +112,10 @@ def extend_ride(ride_id):
 
 @stop_ride_route.route("/rides/<ride_id>",  methods=['DELETE'])
 def stop_ride(ride_id):
-    mongo = Mongodb()
+    mongo = Mongodb('rides')
     result = mongo.update_ride(ride_id, {"$set": {"status": "stoped"}})
     if not result:
         logging.error("Not found. id: {}".format(ride_id))
         return Response(status=404)
     logging.info("Stoped ride. id: {}".format(ride_id))
     return Response(status=200)
-
-@get_apps_picture_route.route("/apps/pictures/<app_name>",  methods=['GET'])
-def get_apps_picture(app_name):
-    if app_name not in get_conf("apps"):
-        return Response(status=404)
-    return send_file("../assets/{}.jpg".format(app_name), mimetype='image/gif')
-
-@get_apps_details_route.route("/apps",  methods=['GET'])
-def get_apps_details():
-    hostname = get_conf("api_hostname")
-    logging.info(hostname)
-    return Response(
-        response=json.dumps({
-            "uber": {
-                "picture_link": "{}/apps/pictures/uber".format(hostname),
-                "deeplink": ""
-            },
-            "marcel": {
-                "picture_link": "{}/apps/pictures/marcel".format(hostname),
-                "deeplink": ""
-            },
-            "snapcar": {
-                "picture_link": "{}/apps/pictures/snapcar".format(hostname),
-                "deeplink": ""
-            },
-            "allocab": {
-                "picture_link": "{}/apps/pictures/allocab".format(hostname),
-                "deeplink": ""
-            },
-            "g7": {
-                "picture_link": "{}/apps/pictures/g7".format(hostname),
-                "deeplink": ""
-            },
-            "drive": {
-                "picture_link": "{}/apps/pictures/drive".format(hostname),
-                "deeplink": ""
-            },
-            "hicab": {
-                "picture_link": "{}/apps/pictures/hicab".format(hostname),
-                "deeplink": ""
-            },
-            "felix": {
-                "picture_link": "{}/apps/pictures/felix".format(hostname),
-                "deeplink": ""
-            },
-            "lecab": {
-                "picture_link": "{}/apps/pictures/lecab".format(hostname),
-                "deeplink": ""
-            }
-        }),
-        status=200,
-        mimetype='application/json'
-    )

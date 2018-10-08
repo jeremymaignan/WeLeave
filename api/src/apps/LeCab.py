@@ -115,5 +115,5 @@ class LeCab():
                     except Exception as err:
                         logging.error("LeCab API return {} [{}]".format(response.status_code, data["errorMessage"]))
                 else:
-                    logging.error("LeCab API return {} [{}]".format(response.status_code, data["errorMessage"]))
+                    logging.error("LeCab API return {}".format(response.status_code))
         return estimations

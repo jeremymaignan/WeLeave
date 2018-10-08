@@ -5,18 +5,19 @@ from bson import ObjectId
 import logging
 
 class Mongodb():
-    def __init__(self):
+    def __init__(self, tablename):
         client = MongoClient(
             get_conf("mongodb_host"),
             get_conf("mongodb_port")
         ) 
         db = client['weleave']
-        self.collection = db['rides']
+        self.collection = db[tablename]
     
-    def get_item(self, id):
+    def get_item(self, query):
         try:
-            return self.collection.find_one({"_id" :ObjectId(id)})
-        except:
+            return self.collection.find_one(query)
+        except Exception as err:
+            logging.error("Cannot fetch item in DB. Error: {}".format(err))
             return None
             
     def insert_item(self, item):
@@ -41,3 +42,6 @@ class Mongodb():
 
     def update_item(self, ride):
         return self.collection.save(ride)
+
+    def update_value(self, id, value):
+        return self.collection.update(id, value)

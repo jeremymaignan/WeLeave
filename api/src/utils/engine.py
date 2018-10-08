@@ -1,9 +1,9 @@
 from utils.Mongodb import Mongodb
 from utils.ConfManager import get_conf
+from bson import ObjectId
 
 from apps.Uber import Uber
 from apps.Marcel import Marcel
-
 from apps.SnapCar import SnapCar
 from apps.Allocab import Allocab
 from apps.G7 import G7
@@ -44,8 +44,8 @@ import logging
 #     return dynamic, global_
 
 def get_fresh_estimation(job_id):
-    mongo = Mongodb()
-    job = mongo.get_item(job_id)
+    mongo = Mongodb('rides')
+    job = mongo.get_item({"_id": ObjectId(job_id)})
     if job["status"] == "done":
         logging.info("Ride is already done")
         return 200

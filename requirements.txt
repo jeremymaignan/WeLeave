@@ -1,4 +1,0 @@
-uber-rides==0.6.0
-termcolor==1.1.0
-tqdm==4.24.0
-geopy==1.16.0

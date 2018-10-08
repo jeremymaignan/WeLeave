@@ -4,7 +4,9 @@ import flask_monitoringdashboard as dashboard
 
 from datetime import datetime
 from utils.ConfManager import get_conf
-import api
+import controllers.users as users
+import controllers.rides as rides
+import controllers.apps as apps
 
 app = Flask(__name__)
 dashboard.bind(app)
@@ -17,12 +19,17 @@ else:
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Register routes
-app.register_blueprint(api.init_ride_route)
-app.register_blueprint(api.stop_ride_route)
-app.register_blueprint(api.get_ride_route)
-app.register_blueprint(api.extend_ride_route)
-app.register_blueprint(api.get_apps_picture_route)
-app.register_blueprint(api.get_apps_details_route)
+# Rides
+app.register_blueprint(rides.init_ride_route)
+app.register_blueprint(rides.stop_ride_route)
+app.register_blueprint(rides.get_ride_route)
+app.register_blueprint(rides.extend_ride_route)
+# Apps
+app.register_blueprint(apps.get_apps_picture_route)
+app.register_blueprint(apps.get_apps_details_route)
+# Users
+app.register_blueprint(users.add_user_address_route)
+app.register_blueprint(users.get_user_data_route)
 
 # Run api
 app.run(debug=True,  host='0.0.0.0', port=5000) # , ssl_context=('cert.pem', 'key.pem'))

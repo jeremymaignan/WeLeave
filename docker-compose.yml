@@ -1,5 +1,4 @@
 version: '3.3'
-
 services:
   mongodb:
     image: mongo:latest
@@ -12,7 +11,6 @@ services:
     ports:
         - 27017:27017
     command: mongod --smallfiles --logpath=/dev/null
-
   api:
     build: "./api"
     depends_on:

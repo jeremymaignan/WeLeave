@@ -6,7 +6,7 @@ import logging
 import grequests
 
 def scheduler():
-    mongo = Mongodb()
+    mongo = Mongodb('rides')
     rides = list(mongo.get_pending_rides(datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
     logging.info("{} Rides found".format(len(rides)))
     async_list = []
