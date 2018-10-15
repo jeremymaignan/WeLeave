@@ -1,4 +1,4 @@
-uber_app_id:  "THaQ8ljU7uVZCbNcanU4gVa4JrXpukHiQyewnqBv"
+uber_app_id:  ""
 number_of_iteration: 15
 delta_between_requests: 120
 mongodb_host: "mongodb"
@@ -13,5 +13,6 @@ apps:
 - 'hicab'
 - 'felix'
 - 'lecab'
+- 'taxify'
 api_hostname: "http://0.0.0.0:5000"
 log_in_file: False

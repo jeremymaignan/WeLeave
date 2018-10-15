@@ -1,6 +1,7 @@
 from utils.Mongodb import Mongodb
 from utils.ConfManager import get_conf
 from bson import ObjectId
+import logging
 
 from apps.Uber import Uber
 from apps.Marcel import Marcel
@@ -11,10 +12,8 @@ from apps.Drive import Drive
 from apps.HiCab import HiCab
 from apps.Felix import Felix
 from apps.LeCab import LeCab
+from apps.Taxify import Taxify
 
-
-from copy import deepcopy
-import logging
 
 # def get_last_min_max(iteration, job, mode_name, new):
 #     if 0 == iteration:
@@ -61,7 +60,8 @@ def get_fresh_estimation(job_id):
         #"drive": Drive(),
         "hicab": HiCab(),
         "felix": Felix(),
-        "lecab": LeCab()
+        #"lecab": LeCab(),
+        "taxify": Taxify()
     }
 
     iteration = job["iteration"]["done"]
