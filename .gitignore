@@ -1,0 +1,7 @@
+data/
+aws_perso.pem
+api/src/flask_monitoringdashboard.db
+api/doc.txt
+api/.DS_Store
+.DS_Store
+static_website/.DS_Store
