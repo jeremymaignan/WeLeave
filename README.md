@@ -10,10 +10,10 @@ Supported apps:
 - SnapCar
 - Drive
 - Taxi G7
-- Hi Cab
+- Citybird
 - Allocab
 - Felix
-- Lecab
+- Taxify
 
 
 ![output_screenshot](https://github.com/jeremymaignan/uber-fare-trend-analytics/blob/master/screenshot.png)
