@@ -3,7 +3,7 @@ import requests
 import json
 import logging
 
-class HiCab():
+class Citybird():
 
     def __init__(self):
         self.api_url = 'https://api.classnco.com/api/v3/CityBird/passenger_requests'

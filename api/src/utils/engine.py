@@ -9,7 +9,7 @@ from apps.SnapCar import SnapCar
 from apps.Allocab import Allocab
 from apps.G7 import G7
 from apps.Drive import Drive
-from apps.HiCab import HiCab
+from apps.Citybird import Citybird
 from apps.Felix import Felix
 from apps.LeCab import LeCab
 from apps.Taxify import Taxify
@@ -58,7 +58,7 @@ def get_fresh_estimation(job_id):
         "allocab": Allocab(),
         "g7": G7(),
         #"drive": Drive(),
-        "hicab": HiCab(),
+        "citybird": Citybird(),
         "felix": Felix(),
         #"lecab": LeCab(),
         "taxify": Taxify()

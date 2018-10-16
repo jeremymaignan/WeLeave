@@ -41,8 +41,8 @@ def get_apps_details():
                 "picture_link": "{}/apps/pictures/drive".format(hostname),
                 "deeplink": ""
             },
-            "hicab": {
-                "picture_link": "{}/apps/pictures/hicab".format(hostname),
+            "citybird": {
+                "picture_link": "{}/apps/pictures/citybird".format(hostname),
                 "deeplink": ""
             },
             "felix": {
