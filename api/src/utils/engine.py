@@ -13,34 +13,9 @@ from apps.Citybird import Citybird
 from apps.Felix import Felix
 from apps.LeCab import LeCab
 from apps.Taxify import Taxify
+from apps.Talixo import Talixo
 
 
-# def get_last_min_max(iteration, job, mode_name, new):
-#     if 0 == iteration:
-#         min_ = new["price"]
-#         max_ = new["price"]
-#     else:
-#         last = job["prices"]["uber"][mode_name][-1]
-#         if new["average"] < last["min"]:
-#             print("[INFO] {} new min {}".format(mode_name, new["average"]))
-#             min_ = new["average"]
-#         else:
-#             min_ = last["min"]
-#         if new["average"] > last["max"]:
-#             print("[INFO] {} new max {}".format(mode_name, new["average"]))
-#             max_ = new["average"]
-#         else:
-#             max_ = last["max"]
-#     return min_, max_
-
-# def get_trends(iteration, job, mode_name, new):
-#     if 0 == iteration:
-#         dynamic = 0.0
-#         global_ = 0.0
-#     else:
-#         dynamic = new["average"] - job["prices"]["uber"][mode_name][-1]["average"]
-#         global_ = new["average"] - job["prices"]["uber"][mode_name][0]["average"]
-#     return dynamic, global_
 
 def get_fresh_estimation(job_id):
     mongo = Mongodb('rides')
@@ -57,11 +32,12 @@ def get_fresh_estimation(job_id):
         "snapcar": SnapCar(),
         "allocab": Allocab(),
         "g7": G7(),
-        #"drive": Drive(),
+        "drive": Drive(),
         "citybird": Citybird(),
         "felix": Felix(),
         #"lecab": LeCab(),
-        "taxify": Taxify()
+        "taxify": Taxify(),
+        "talixo": Talixo()
     }
 
     iteration = job["iteration"]["done"]
@@ -92,3 +68,32 @@ def get_fresh_estimation(job_id):
         return 500
     logging.info("{} [{}] Estimations updated".format(job["_id"], job["iteration"]["done"]))
     return 200
+
+
+
+# def get_last_min_max(iteration, job, mode_name, new):
+#     if 0 == iteration:
+#         min_ = new["price"]
+#         max_ = new["price"]
+#     else:
+#         last = job["prices"]["uber"][mode_name][-1]
+#         if new["average"] < last["min"]:
+#             print("[INFO] {} new min {}".format(mode_name, new["average"]))
+#             min_ = new["average"]
+#         else:
+#             min_ = last["min"]
+#         if new["average"] > last["max"]:
+#             print("[INFO] {} new max {}".format(mode_name, new["average"]))
+#             max_ = new["average"]
+#         else:
+#             max_ = last["max"]
+#     return min_, max_
+
+# def get_trends(iteration, job, mode_name, new):
+#     if 0 == iteration:
+#         dynamic = 0.0
+#         global_ = 0.0
+#     else:
+#         dynamic = new["average"] - job["prices"]["uber"][mode_name][-1]["average"]
+#         global_ = new["average"] - job["prices"]["uber"][mode_name][0]["average"]
+#     return dynamic, global_

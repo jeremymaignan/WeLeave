@@ -43,6 +43,17 @@ class Marcel():
             "channel": 2
         }
 
+    def is_ride_in_paris(self, from_, to):
+        available_cities = ["paris", "issy", "boulogne", "neuilly", "levallois", "vanves"]
+        from_in_paris = False
+        to_in_paris = False
+        for city in available_cities: 
+            if city in from_.lower():
+                from_in_paris = True
+            if city in to.lower():
+                to_in_paris = True
+        return from_in_paris and to_in_paris
+
     def send_request(self, mode_id, from_, to):
         payload = self.build_payload(from_, to)
         payload["vehicle_type"]["id"] = mode_id
@@ -67,6 +78,9 @@ class Marcel():
             "name": address_drop_off["address"]
         }
         for mode, params in self.available_seats.items():
+            if mode == "Zoe": 
+                if not self.is_ride_in_paris(from_["name"], to["name"]):
+                    continue
             if params["seats"] >= nb_seats:
                 estimation = self.send_request(params["id"], from_, to)
                 if estimation:

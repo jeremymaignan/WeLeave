@@ -2,6 +2,10 @@ import requests
 from datetime import datetime
 import logging
 
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+
+
 class Drive():
     def __init__(self):
         self.api_url = 'https://www.drive.gt/order/getPrice/'
@@ -41,7 +45,7 @@ class Drive():
                     'OrderForm[toAirport]': '',
                     'OrderForm[messageDriver]': ''
                 }
-                response = requests.post(self.api_url, headers=self.header, data=paylaod)
+                response = requests.post(self.api_url, headers=self.header, data=paylaod, verify=False)
                 if response.status_code == 200:
                     data = response.json()
                     estimations[mode] = {

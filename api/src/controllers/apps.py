@@ -52,6 +52,14 @@ def get_apps_details():
             "lecab": {
                 "picture_link": "{}/apps/pictures/lecab".format(hostname),
                 "deeplink": ""
+            },
+            "taxify": {
+                "picture_link": "{}/apps/pictures/taxify".format(hostname),
+                "deeplink": ""
+            },
+            "talixo": {
+                "picture_link": "{}/apps/pictures/talixo".format(hostname),
+                "deeplink": ""
             }
         }),
         status=200,

@@ -4,15 +4,16 @@ delta_between_requests: 120
 mongodb_host: "mongodb"
 mongodb_port: 27017
 apps:
-- 'uber'
-- 'marcel'
-- 'snapcar'
-- 'allocab'
-- 'g7'
-- 'drive'
-- 'citybird'
-- 'felix'
-- 'lecab'
-- 'taxify'
+- uber
+- marcel
+- snapcar
+- allocab
+- g7
+- drive
+- citybird
+- felix
+- lecab
+- taxify
+- talixo
 api_hostname: "http://0.0.0.0:5000"
 log_in_file: False
