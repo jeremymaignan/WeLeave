@@ -51,19 +51,20 @@ def get_ride(ride_id):
         qs = parse.parse_qs(request.query_string.decode())
         size = int(qs["size"][0])
         update = ast.literal_eval(qs["update"][0].capitalize())
+        asynch = ast.literal_eval(qs["asynch"][0].capitalize())
         apps = qs["apps"]
         if 1 == len(apps) and apps[0] == "*":
             apps = get_conf("apps")
         else:
             apps = apps[0].split(",")
-        logging.info("Size: {} Update: {} Apps: {}".format(size, update, apps))
+        logging.info("Size: {} Update: {} Apps: {} Asynch: {}".format(size, update, apps, asynch))
     except Exception as err:
         logging.error("Cannot parse query string params. Error: {}".format(err))
         return Response(status=400)
 
     # Update estimations
     if update:
-        status = get_fresh_estimation(ride_id)
+        status = get_fresh_estimation(ride_id, asynch)
         if status == 404:
             logging.error("Not found. id: {}".format(ride_id))
             return Response(status=404)

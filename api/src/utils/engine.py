@@ -14,10 +14,9 @@ from apps.Felix import Felix
 from apps.LeCab import LeCab
 from apps.Taxify import Taxify
 from apps.Talixo import Talixo
+from apps.Backlane import Backlane
 
-
-
-def get_fresh_estimation(job_id):
+def get_fresh_estimation(job_id, asynch):
     mongo = Mongodb('rides')
     job = mongo.get_item({"_id": ObjectId(job_id)})
     if job["status"] == "done":
@@ -37,7 +36,8 @@ def get_fresh_estimation(job_id):
         "felix": Felix(),
         #"lecab": LeCab(),
         "taxify": Taxify(),
-        "talixo": Talixo()
+        "talixo": Talixo(),
+        "backlane": Backlane()
     }
 
     iteration = job["iteration"]["done"]
@@ -55,6 +55,8 @@ def get_fresh_estimation(job_id):
             if mode not in job["prices"][provider_name].keys():
                 job["prices"][provider_name][mode] = []
             job["prices"][provider_name][mode].append(estimation)
+            if asynch:
+                mongo.update_item(job)
             
     # Increase iteration
     job["iteration"]["todo"] -= 1

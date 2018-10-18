@@ -6,3 +6,4 @@ uber-rides==0.6.0
 grequests==0.3.0
 pyOpenSSL==18.0.0
 Flask-MonitoringDashboard==2.0.6
+bs4==0.0.1
