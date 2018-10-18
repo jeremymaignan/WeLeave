@@ -14,6 +14,8 @@ Supported apps:
 - Allocab
 - Felix
 - Taxify
+- Talixo
+- Backlane
 
 
 ![output_screenshot](https://github.com/jeremymaignan/uber-fare-trend-analytics/blob/master/screenshot.png)

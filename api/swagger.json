@@ -1,6 +1,6 @@
 {
   "basePath": "/",
-  "host": "0.0.0.0:5000",
+  "host": "35.158.219.60:5000",
   "info": {
     "contact": {
       "email": "jeremy.maignan@gmail.com"
@@ -13,17 +13,6 @@
     "http"
   ],
   "swagger": "2.0",
-  "tags": [
-    {
-      "name": "Rides"
-    },
-    {
-      "name": "Apps"
-    },
-    {
-      "name": "Users"
-    }
-  ],
   "paths": {
     "/apps": {
       "get": {
@@ -157,6 +146,13 @@
             "type": "boolean"
           },
           {
+            "description": "Do you want the API to save in DB everytime it has a new estimation or only at the end",
+            "in": "query",
+            "name": "asynch",
+            "required": true,
+            "type": "boolean"
+          },
+          {
             "description": "List of apps you want to fetch data from, coma separated (* for all)",
             "in": "query",
             "name": "apps",
@@ -261,14 +257,14 @@
         },
         "summary": "",
         "tags": [
-          "User"
+          "Users"
         ]
       }
     },
     "/users/{user_id}/addresses": {
       "post": {
         "tags": [
-          "User"
+          "Users"
         ],
         "consumes": [
           "application/json"
