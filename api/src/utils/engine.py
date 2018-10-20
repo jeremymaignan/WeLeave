@@ -16,6 +16,30 @@ from apps.Taxify import Taxify
 from apps.Talixo import Talixo
 from apps.Backlane import Backlane
 
+def get_min_and_max(estimations, new_price):
+    if [] == estimations:
+        return new_price, new_price
+    last_estimation = estimations[-1]
+    if last_estimation["max"] > new_price:
+        max = last_estimation["max"]
+    else:
+        max = new_price
+    if last_estimation["min"] <  new_price:
+        min = last_estimation["min"]
+    else:
+        min = new_price
+    return min, max
+
+def get_trends(estimations, new_price):
+    if [] == estimations:
+        return 0.0, 0.0
+    first_estimation = estimations[0]
+    last_estimation = estimations[-1]
+    
+    dynamic = round(new_price - last_estimation["price"], 2)
+    global_ = round(new_price - first_estimation["price"], 2)
+    return dynamic, global_
+
 def get_fresh_estimation(job_id, asynch):
     mongo = Mongodb('rides')
     job = mongo.get_item({"_id": ObjectId(job_id)})
@@ -54,6 +78,15 @@ def get_fresh_estimation(job_id, asynch):
             # Create key (mode) in dict
             if mode not in job["prices"][provider_name].keys():
                 job["prices"][provider_name][mode] = []
+            # Calculate min & max
+            min, max = get_min_and_max(job["prices"][provider_name][mode], estimation["price"]) 
+            estimation["min"] = min
+            estimation["max"] = max
+            # Calculate trends
+            dynamic, global_ = get_trends(job["prices"][provider_name][mode], estimation["price"])
+            estimation["dynamic_trends"] = dynamic
+            estimation["global_trends"] = global_
+            # Save new estimation
             job["prices"][provider_name][mode].append(estimation)
             if asynch:
                 mongo.update_item(job)
@@ -70,32 +103,3 @@ def get_fresh_estimation(job_id, asynch):
         return 500
     logging.info("{} [{}] Estimations updated".format(job["_id"], job["iteration"]["done"]))
     return 200
-
-
-
-# def get_last_min_max(iteration, job, mode_name, new):
-#     if 0 == iteration:
-#         min_ = new["price"]
-#         max_ = new["price"]
-#     else:
-#         last = job["prices"]["uber"][mode_name][-1]
-#         if new["average"] < last["min"]:
-#             print("[INFO] {} new min {}".format(mode_name, new["average"]))
-#             min_ = new["average"]
-#         else:
-#             min_ = last["min"]
-#         if new["average"] > last["max"]:
-#             print("[INFO] {} new max {}".format(mode_name, new["average"]))
-#             max_ = new["average"]
-#         else:
-#             max_ = last["max"]
-#     return min_, max_
-
-# def get_trends(iteration, job, mode_name, new):
-#     if 0 == iteration:
-#         dynamic = 0.0
-#         global_ = 0.0
-#     else:
-#         dynamic = new["average"] - job["prices"]["uber"][mode_name][-1]["average"]
-#         global_ = new["average"] - job["prices"]["uber"][mode_name][0]["average"]
-#     return dynamic, global_

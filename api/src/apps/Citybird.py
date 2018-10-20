@@ -80,5 +80,5 @@ class Citybird():
                         "iteration": iteration
                     }
                 else:
-                    logging.error("HiCab API return {} [{}]".format(response.status_code, response.json()['error']['message']))
+                    logging.error("HiCab API return {} for mode {} [{}]".format(response.status_code, mode, response.json()['error']['message']))
         return estimations
