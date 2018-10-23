@@ -11,7 +11,7 @@ jobs:
 
      - setup_remote_docker
     
-    - run:
+      - run:
         name: Install Docker client
         command: |
           set -x
@@ -20,14 +20,14 @@ jobs:
           tar -xz -C /tmp -f /tmp/docker-$VER.tgz
           mv /tmp/docker/* /usr/bin
 
-    - run:
+      - run:
         name: Install Docker Compose
         command: |
           curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
           chmod +x ~/docker-compose
           mv ~/docker-compose /usr/local/bin/docker-compose
 
-     - run:
+      - run:
          name: Build docker-compose containers
          command: |
            docker-compose build
@@ -37,11 +37,11 @@ jobs:
     #      command: |
     #        docker-compose up -d
 
-     - run:
+      - run:
           name: Install awscli
           command: pip install awscli
 
-     - deploy:
+      - deploy:
           name: Push application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
