@@ -3,13 +3,29 @@ jobs:
  build:
    docker:
      # using custom image, see .circleci/images/primary/Dockerfile
-     - image: docker/compose:1.16.1
+     - image: python:3.7
    working_directory: /app
 
    steps:
      - checkout
 
      - setup_remote_docker
+    
+    - run:
+        name: Install Docker client
+        command: |
+          set -x
+          VER="17.03.0-ce"
+          curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
+          tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+          mv /tmp/docker/* /usr/bin
+
+    - run:
+        name: Install Docker Compose
+        command: |
+          curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` > ~/docker-compose
+          chmod +x ~/docker-compose
+          mv ~/docker-compose /usr/local/bin/docker-compose
 
      - run:
          name: Build docker-compose containers
@@ -23,7 +39,7 @@ jobs:
 
      - run:
           name: Install awscli
-          command: apt-get update && apt-get install -y awscli
+          command: pip install awscli
 
      - deploy:
           name: Push application Docker image
