@@ -23,7 +23,7 @@ jobs:
 
      - run:
           name: Install awscli
-          command: pip install awscli
+          command: apt-get update && apt-get install -y awscli
 
      - deploy:
           name: Push application Docker image
