@@ -4,7 +4,7 @@ jobs:
    docker:
      # using custom image, see .circleci/images/primary/Dockerfile
      - image: docker/compose:1.16.1
-   working_directory: ~/tfm
+   working_directory: /app
 
    steps:
      - checkout
@@ -20,3 +20,7 @@ jobs:
          name: Start containers
          command: |
            docker-compose up -d
+
+     - run:
+          name: Install awscli
+          command: sudo pip install awscli
