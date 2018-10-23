@@ -29,13 +29,13 @@ jobs:
          name: Build docker-compose containers
          command: |
            docker-compose build
-     - run:
-         name: Start containers
-         command: |
-           docker-compose up -d
+    #  - run:
+    #      name: Start containers
+    #      command: |
+    #        docker-compose up -d
      - run:
          name: Install awscli
-         command: sudo pip install awscli
+         command: pip install awscli
      - deploy:
          name: Push application Docker image
          command: |
