@@ -16,11 +16,21 @@ jobs:
          command: |
            docker-compose build
 
-     - run:
-         name: Start containers
-         command: |
-           docker-compose up -d
+    #  - run:
+    #      name: Start containers
+    #      command: |
+    #        docker-compose up -d
 
      - run:
           name: Install awscli
-          command: sudo pip install awscli
+          command: pip install awscli
+
+     - deploy:
+          name: Push application Docker image
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              login="$(aws ecr get-login --region eu-west-1)"
+              ${login}
+              docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+              docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+            fi
