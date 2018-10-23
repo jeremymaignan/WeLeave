@@ -1,0 +1,22 @@
+version: 2
+jobs:
+ build:
+   docker:
+     # using custom image, see .circleci/images/primary/Dockerfile
+     - image: docker/compose:1.16.1
+   working_directory: ~/tfm
+
+   steps:
+     - checkout
+
+     - setup_remote_docker
+
+     - run:
+         name: Build docker-compose containers
+         command: |
+           docker-compose build
+
+     - run:
+         name: Start containers
+         command: |
+           docker-compose up -d
