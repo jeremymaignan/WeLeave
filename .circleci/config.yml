@@ -2,7 +2,7 @@ version: 2
 jobs:
  build:
    docker:
-     - image: scratch
+     - image: alpine
    steps:
      - run: 
         name: Pull project
