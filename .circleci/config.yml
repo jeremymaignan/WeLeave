@@ -1,7 +1,9 @@
 version: 2
 jobs:
  build:
+   docker:
+     - image: scratch
    steps:
      - run: 
         name: Pull project
-        command: ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker-compose stop && git status && docker-compose up --build"
+        command: ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker-compose stop && git pull && docker-compose up --build &"
