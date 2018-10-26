@@ -3,6 +3,9 @@ jobs:
  build:
    docker:
      - image: python:3.7
+   branches:
+      only:
+        - master
    steps:
      - run: 
         name: Pull project
