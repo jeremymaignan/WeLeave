@@ -16,6 +16,22 @@ from apps.Taxify import Taxify
 from apps.Talixo import Talixo
 from apps.Backlane import Backlane
 
+def get_providers():
+    return {
+        "uber": Uber(),
+        "marcel": Marcel(),
+        "snapcar": SnapCar(),
+        "allocab": Allocab(),
+        "g7": G7(),
+        "drive": Drive(),
+        "citybird": Citybird(),
+        "felix": Felix(),
+        #"lecab": LeCab(),
+        "taxify": Taxify(),
+        "talixo": Talixo(),
+        "backlane": Backlane()
+    }
+
 def get_min_and_max(estimations, new_price):
     if [] == estimations:
         return new_price, new_price
@@ -49,31 +65,19 @@ def get_fresh_estimation(job_id, asynch):
     if not job:
         logging.error('Job {} not found in DB'.format(job_id))
         return 404
-    providers = {
-        "uber": Uber(),
-        "marcel": Marcel(),
-        "snapcar": SnapCar(),
-        "allocab": Allocab(),
-        "g7": G7(),
-        "drive": Drive(),
-        "citybird": Citybird(),
-        "felix": Felix(),
-        #"lecab": LeCab(),
-        "taxify": Taxify(),
-        "talixo": Talixo(),
-        "backlane": Backlane()
-    }
+    providers = get_providers()
 
     iteration = job["iteration"]["done"]
     logging.info("[{}] Iter: {} Seats: {} ".format(job["_id"], iteration + 1, job["seat_count"]))
-
+    duration = job["duration"]
+    distance = job["distance"]
     for provider_name, provider in providers.items():
         # Create key (app_name) in dict
         if provider_name not in job["prices"].keys():
             job["prices"][provider_name] = {}
         logging.info("{}".format(provider_name.capitalize() ))
         # Get estimations
-        data = provider.get_estimation(job["from"], job["to"], job["seat_count"], iteration)
+        data = provider.get_estimation(job["from"], job["to"], job["seat_count"], iteration, duration, distance)
         for mode, estimation in data.items():
             # Create key (mode) in dict
             if mode not in job["prices"][provider_name].keys():

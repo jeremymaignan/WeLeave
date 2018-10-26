@@ -63,7 +63,7 @@ class Marcel():
         logging.error("Marcel API return {} [{}]".format(response.status_code, response.json()["error"]["message"]))  
         return {}
 
-    def get_estimation(self, address_pick_up, address_drop_off, nb_seats, iteration):
+    def get_estimation(self, address_pick_up, address_drop_off, nb_seats, iteration, duration, distance):
         estimations = {}
         from_ = {
             "lat": address_pick_up["coordinates"]["lat"],

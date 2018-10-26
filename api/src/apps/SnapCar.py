@@ -11,7 +11,7 @@ class SnapCar():
             "van": 6
         }
     
-    def get_estimation(self, from_, to, seat_count, iteration):
+    def get_estimation(self, from_, to, seat_count, iteration, duration, distance):
         payload = {
             "start_lng": from_["coordinates"]["long"],
             "start_lat": from_["coordinates"]["lat"],

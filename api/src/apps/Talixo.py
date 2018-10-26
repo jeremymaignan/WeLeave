@@ -29,16 +29,13 @@ class Talixo():
             return response.json()["talixo_id"]
         return None
     
-    def get_estimation(self, from_, to, seat_count, iteration):
+    def get_estimation(self, from_, to, seat_count, iteration, duration, distance):
         # Get addresses id
         from_id = self.get_address_id(from_["address"])
         to_id = self.get_address_id(to["address"])
         if not from_id or not to_id:
             print("Cannot get id of addresses")
             return {}
-        print(from_id, to_id)
-
-
 
         payload = json.dumps({
             "start_time_date": (datetime.now() + timedelta(hours=12)).strftime("%Y-%m-%d"),

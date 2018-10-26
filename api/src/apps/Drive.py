@@ -31,7 +31,7 @@ class Drive():
             }
         }
 
-    def get_estimation(self, from_, to, nb_seats, iteration):
+    def get_estimation(self, from_, to, nb_seats, iteration, duration, distance):
         estimations = {}
         for mode, params in self.available_seats.items():
             if params["seats"] >= nb_seats:

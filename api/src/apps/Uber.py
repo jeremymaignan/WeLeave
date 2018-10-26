@@ -21,19 +21,19 @@ class Uber():
         session = Session(server_token=self.token)
         client = UberRidesClient(session)
         response = client.get_price_estimates(
-            start_latitude= from_["coordinates"]["lat"],
-            start_longitude= from_["coordinates"]["long"],
-            end_latitude= to["coordinates"]["lat"],
-            end_longitude= to["coordinates"]["long"],
+            start_latitude= from_["lat"],
+            start_longitude= from_["long"],
+            end_latitude= to["lat"],
+            end_longitude= to["long"],
             seat_count=2
         )
         response = response.json.get('prices')
         for mode in response:
             if "UberX" == mode["localized_display_name"]:
-                return round(float(mode["distance"]) * 1.6093 * 1000.0, 2) , float(mode["duration"])
+                return round(float(mode["distance"]), 2) , float(mode["duration"] / 60)
         return None, None
 
-    def get_estimation(self, from_, to, seat_count, iteration):
+    def get_estimation(self, from_, to, seat_count, iteration, duration, distance):
         if seat_count > 2:
             seat_count_uber_format = 2
         else:

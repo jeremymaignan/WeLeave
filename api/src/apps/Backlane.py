@@ -33,7 +33,7 @@ class Backlane():
             }
         }
 
-    def get_estimation(self, address_pick_up, address_drop_off, seat_count, iteration):
+    def get_estimation(self, address_pick_up, address_drop_off, seat_count, iteration, duration, distance):
         estimations = {}
         params = (
             ('utf8', '\u2713'),

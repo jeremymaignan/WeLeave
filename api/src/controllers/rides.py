@@ -6,6 +6,7 @@ from urllib import parse
 from bson import ObjectId
 import ast
 
+from apps.Uber import Uber
 from utils.Mongodb import Mongodb
 from utils.ConfManager import get_conf
 from entities.Rides import Rides
@@ -16,6 +17,11 @@ init_ride_route = Blueprint('init_ride', __name__)
 stop_ride_route = Blueprint('stop_ride', __name__)
 get_ride_route = Blueprint('get_ride', __name__)
 extend_ride_route = Blueprint('extend_ride', __name__)
+
+def get_distance_and_duration(from_, to):
+    u = Uber()
+    distance, duration = u.get_distance_and_duration(from_, to)
+    return distance, duration
 
 @init_ride_route.route("/rides",  methods=['POST'])
 def init_ride():
@@ -35,9 +41,15 @@ def init_ride():
             mimetype='application/json'
         )
     mongo = Mongodb('rides')
+    # Add distance and duration
+    distance, duration = get_distance_and_duration(ride["from"]["coordinates"], ride["to"]["coordinates"])
+    ride["distance"] = distance
+    ride["duration"] = duration
     ride_id = mongo.insert_item(ride)
+    # Create user
     create_user(ride["user_id"])
     logging.info("Ride created. id: {}".format(ride_id))
+
     return Response(
         response=json.dumps({"id": str(ride_id)}),
         status=201,

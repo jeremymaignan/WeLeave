@@ -3,8 +3,6 @@ import json
 from datetime import datetime
 import logging
 
-from apps.Uber import Uber
-
 class Taxify():
     def __init__(self):
         self.api_url = "https://ride.guru/api/fares.json"
@@ -17,18 +15,9 @@ class Taxify():
             'authority': 'ride.guru'
         }    
 
-    def get_distance_and_duration(self, from_, to):
-        u = Uber()
-        distance, duration = u.get_distance_and_duration(from_, to)
-        return distance, duration
 
-    def get_estimation(self, from_, to, seat_count, iteration):
+    def get_estimation(self, from_, to, seat_count, iteration, duration, distance):
         if 4 < seat_count:
-            return {}
-        # Get distance and duration from Uber sdk
-        distance, duration = self.get_distance_and_duration(from_, to)
-        if not distance or not duration:
-            logging.error("Cannot get duration and distance from uber sdk")
             return {}
         params = (
             ('start', '{},{}'.format(from_["coordinates"]["lat"], from_["coordinates"]["long"])),

@@ -19,7 +19,7 @@ class G7():
         }
         self.api_url = 'https://gateway.g7booking.com/services/structuredProducts'
 
-    def get_estimation(self, from_, to, seat_count, iteration):
+    def get_estimation(self, from_, to, seat_count, iteration, duration, distance):
         if seat_count > 4:
             return {}
         date = datetime.now() + timedelta(hours=2, minutes=5)

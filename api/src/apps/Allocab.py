@@ -49,7 +49,7 @@ class Allocab():
         logging.error("Allocab API return {}".format(response.status_code))
         return None, None
 
-    def get_estimation(self, from_, to, seat_count, iteration):
+    def get_estimation(self, from_, to, seat_count, iteration, duration, distance):
         estimations = {}
         id, token = self.create_ride(from_["address"], to["address"])
         if not id or not token:
