@@ -55,7 +55,7 @@ def get_apps_details():
                 "drive": {
                     "picture_link": "{}/apps/pictures/drive".format(hostname),
                     "deeplink": "",
-                    "rating": None
+                    "rating": ""
                 },
                 "citybird": {
                     "picture_link": "{}/apps/pictures/citybird".format(hostname),
