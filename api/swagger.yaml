@@ -15,7 +15,14 @@ paths:
     get: 
       consumes: 
         - application/json
-      description: "Get details apps"
+      description: "Get details apps (deeplink, ranking on stores)"
+      parameters: 
+        - 
+          description: "Device os ('ios' or 'android')"
+          in: query
+          name: os
+          required: true
+          type: string
       responses: 
         200: 
           description: ""
