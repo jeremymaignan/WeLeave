@@ -11,5 +11,5 @@ jobs:
         name: Pull project
         command: |
           ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker-compose stop && git pull"
-          ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker-compose up --detach || docker-compose up --build --detach"
+          ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker-compose up --build --detach"
 #ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker rmi -f `docker images -q`"

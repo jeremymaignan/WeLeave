@@ -2,6 +2,7 @@ version: '3.3'
 services:
   mongodb:
     image: mongo:latest
+    pull: true
     container_name: "mongodb"
     environment:
       - MONGO_DATA_DIR=/data/db
@@ -13,6 +14,7 @@ services:
     command: mongod --smallfiles --logpath=/dev/null
   api:
     build: "./api"
+    pull: true
     depends_on:
       - "mongodb"
     links:
@@ -24,6 +26,7 @@ services:
     - ./api/:/var/app/api/
   swagger:
     image: lukastosic/swaggerui-docker
+    pull: true
     restart: always
     volumes:
       - ./api/swagger.json:/app/swagger.json
@@ -31,6 +34,7 @@ services:
       - "81:80"
   website:
     image: 'bitnami/apache:latest'
+    pull: true
     ports:
       - '80:8080'
       - '443:8443'
