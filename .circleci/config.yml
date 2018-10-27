@@ -8,8 +8,12 @@ jobs:
         - master
    steps:
      - run: 
-        name: Pull project
+        name: Stop platform
         command: |
-          ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker-compose stop && git pull"
-          ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker-compose up --build --detach"
+          ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker-compose stop"
+   steps:
+     - run: 
+        name: Pull project and run platform
+        command: |
+          ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && git pull && docker-compose up --build --detach"
 #ssh -o "StrictHostKeyChecking no" ec2-user@ec2-35-158-219-60.eu-central-1.compute.amazonaws.com "cd WeLeave && docker rmi -f `docker images -q`"
