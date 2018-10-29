@@ -30,27 +30,27 @@ def get_apps_details():
                 "uber": {
                     "picture_link": "{}/apps/pictures/uber".format(hostname),
                     "deeplink": "",
-                    "rating": 4.2
+                    "rating": "4.2"
                 },
                 "marcel": {
                     "picture_link": "{}/apps/pictures/marcel".format(hostname),
                     "deeplink": "",
-                    "rating": 3.9
+                    "rating": "3.9"
                 },
                 "snapcar": {
                     "picture_link": "{}/apps/pictures/snapcar".format(hostname),
                     "deeplink": "",
-                    "rating": 3.4
+                    "rating": "3.4"
                 },
                 "allocab": {
                     "picture_link": "{}/apps/pictures/allocab".format(hostname),
                     "deeplink": "",
-                    "rating": 3.9
+                    "rating": "3.9"
                 },
                 "g7": {
                     "picture_link": "{}/apps/pictures/g7".format(hostname),
                     "deeplink": "",
-                    "rating": 3.7
+                    "rating": "3.7"
                 },
                 "drive": {
                     "picture_link": "{}/apps/pictures/drive".format(hostname),
@@ -60,27 +60,27 @@ def get_apps_details():
                 "citybird": {
                     "picture_link": "{}/apps/pictures/citybird".format(hostname),
                     "deeplink": "",
-                    "rating": 4.3
+                    "rating": "4.3"
                 },
                 "felix": {
                     "picture_link": "{}/apps/pictures/felix".format(hostname),
                     "deeplink": "",
-                    "rating": 3.2
+                    "rating": "3.2"
                 },
                 "lecab": {
                     "picture_link": "{}/apps/pictures/lecab".format(hostname),
                     "deeplink": "",
-                    "rating": 3.7
+                    "rating": "3.7"
                 },
                 "taxify": {
                     "picture_link": "{}/apps/pictures/taxify".format(hostname),
                     "deeplink": "",
-                    "rating": 4.2
+                    "rating": "4.2"
                 },
                 "talixo": {
                     "picture_link": "{}/apps/pictures/talixo".format(hostname),
                     "deeplink": "",
-                    "rating": 3.9
+                    "rating": "3.9"
                 }
             }),
             status=200,
@@ -91,57 +91,57 @@ def get_apps_details():
             "uber": {
                 "picture_link": "{}/apps/pictures/uber".format(hostname),
                 "deeplink": "",
-                "rating": 4.2
+                "rating": "4.2"
             },
             "marcel": {
                 "picture_link": "{}/apps/pictures/marcel".format(hostname),
                 "deeplink": "",
-                "rating": 3.1
+                "rating": "3.1"
             },
             "snapcar": {
                 "picture_link": "{}/apps/pictures/snapcar".format(hostname),
                 "deeplink": "",
-                "rating": 3.8
+                "rating": "3.8"
             },
             "allocab": {
                 "picture_link": "{}/apps/pictures/allocab".format(hostname),
                 "deeplink": "",
-                "rating": 4.7
+                "rating": "4.7"
             },
             "g7": {
                 "picture_link": "{}/apps/pictures/g7".format(hostname),
                 "deeplink": "",
-                "rating": 3.9
+                "rating": "3.9"
             },
             "drive": {
                 "picture_link": "{}/apps/pictures/drive".format(hostname),
                 "deeplink": "",
-                "rating": 4.9
+                "rating": "4.9"
             },
             "citybird": {
                 "picture_link": "{}/apps/pictures/citybird".format(hostname),
                 "deeplink": "",
-                "rating": 4.4
+                "rating": "4.4"
             },
             "felix": {
                 "picture_link": "{}/apps/pictures/felix".format(hostname),
                 "deeplink": "",
-                "rating": 3.5
+                "rating": "3.5"
             },
             "lecab": {
                 "picture_link": "{}/apps/pictures/lecab".format(hostname),
                 "deeplink": "",
-                "rating": 3.7
+                "rating": "3.7"
             },
             "taxify": {
                 "picture_link": "{}/apps/pictures/taxify".format(hostname),
                 "deeplink": "",
-                "rating": 4.8
+                "rating": "4.8"
             },
             "talixo": {
                 "picture_link": "{}/apps/pictures/talixo".format(hostname),
                 "deeplink": "",
-                "rating": 4.6
+                "rating": "4.6"
             }
         }),
         status=200,
