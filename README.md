@@ -24,9 +24,9 @@ Supported apps:
 ```sh
 docker-compose up --build
 ```
-**MongoDB:** localhost:27017
+**MongoDB:** 0.0.0.0:27017
 
-**Swagger:** localhost:81
+**Swagger:** 0.0.0.0:81
 
 **API:** 0.0.0.0:5000
 
